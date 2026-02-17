@@ -1,1093 +1,10 @@
-----file 1--- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alfabeto della Parita</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root {
---bg:#fefefe;--bg-s:#f8f6f4;--bg-c:#fff;--fg:#2d2a26;--fg-m:#6b6560;
---acc:#c8507a;--acc-d:#a83560;--acc-p:#f5d4de;
---rose:#c8909c;--rose-p:#f4dce0;--lav:#b8a8c8;--lav-p:#eee8f4;
---ter:#a093c4;--ter-p:#e8e4f0;--cor:#c88a7a;--cor-p:#f5e0d8;
---sec:#c9a87c;--sec-p:#f0e4d4;--emd:#7ca890;--emd-p:#d8f0e4;
---sky:#8aaac4;--sky-p:#e0ecf4;--amb:#c4a060;--amb-p:#f5ecd0;
---blu:#8a9cc8;--blu-p:#dce0f0;--bor:#e0dcd6;
---suc:#7ca890;--war:#c9a87c;--dan:#c88080;
---r:14px;--rl:24px;--sh:0 4px 24px rgba(45,42,38,0.05);--shl:0 12px 48px rgba(45,42,38,0.08);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Outfit',sans-serif;background:linear-gradient(135deg,#fdf8f6 0%,#f8f2f8 20%,#f0f4f8 40%,#f8f4f0 60%,#f6f0f4 80%,#fdf6f8 100%);background-attachment:fixed;color:var(--fg);min-height:100vh;line-height:1.6}
-.ct{max-width:1300px;margin:0 auto;padding:0 24px}
-h1,h2,h3{font-weight:700;line-height:1.2}
-
-/* Header */
-.hd{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bor);padding:16px 0}
-.hd-c{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.lg{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg)}
-.lg-i{width:50px;height:50px;background:linear-gradient(135deg,var(--acc-d),var(--acc));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:800;color:#fff;box-shadow:0 8px 24px rgba(200,80,122,0.35)}
-.lg-t{font-size:1.35rem;font-weight:700}
-.lg-t span{color:var(--acc-d)}
-.hd-a{display:flex;align-items:center;gap:16px}
-
-/* Role Toggle */
-.role-toggle{display:flex;align-items:center;gap:12px;padding:10px 20px;background:var(--bg-c);border-radius:50px;border:1px solid var(--bor);box-shadow:var(--sh);min-width:200px;justify-content:center}
-.role-toggle span{font-size:0.9rem;font-weight:500;color:var(--fg-m);transition:0.3s;min-width:60px;text-align:center}
-.role-toggle span.active{color:var(--acc-d);font-weight:600}
-.toggle-sw{position:relative;width:50px;height:28px;background:var(--bor);border-radius:50px;cursor:pointer;transition:0.3s;flex-shrink:0}
-.toggle-sw::after{content:'';position:absolute;top:4px;left:4px;width:20px;height:20px;background:#fff;border-radius:50%;transition:0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
-.toggle-sw.on{background:var(--acc)}
-.toggle-sw.on::after{transform:translateX(22px)}
-
-/* Buttons */
-.bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border:none;border-radius:var(--r);font-family:inherit;font-size:0.9rem;font-weight:600;cursor:pointer;transition:0.3s;text-decoration:none;white-space:nowrap}
-.bt:active{transform:scale(0.97)}
-.bt-p{background:linear-gradient(135deg,var(--acc-d),var(--acc));color:#fff;box-shadow:0 6px 24px rgba(200,80,122,0.3)}
-.bt-p:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(200,80,122,0.4)}
-.bt-s{background:var(--bg-s);color:var(--fg);border:1px solid var(--bor)}
-.bt-s:hover{border-color:var(--acc);color:var(--acc-d);transform:translateY(-2px)}
-.bt-c{background:linear-gradient(135deg,var(--cor),var(--sec));color:#fff;box-shadow:0 6px 24px rgba(200,138,122,0.3)}
-.bt-c:hover{transform:translateY(-2px)}
-.bt-q{background:linear-gradient(135deg,var(--ter),var(--lav));color:#fff;box-shadow:0 6px 24px rgba(160,147,196,0.3)}
-.bt-q:hover{transform:translateY(-2px)}
-.bt-d{background:var(--dan);color:#fff}
-.bt-w{background:var(--war);color:#fff}
-.bt-g{background:transparent;color:var(--fg-m);padding:8px 14px}
-.bt-g:hover{background:var(--bg-s);color:var(--fg)}
-.bt-i{width:46px;height:46px;padding:0;border-radius:12px}
-
-/* Hero */
-.hr{padding:60px 0 40px;text-align:center}
-.hr-b{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--lav-p);color:var(--ter);border-radius:50px;font-size:0.9rem;font-weight:600;margin-bottom:20px}
-.hr h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;margin-bottom:20px}
-.hr h1 .hl{background:linear-gradient(135deg,var(--acc-d),var(--acc),var(--ter));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hr-s{font-size:1.1rem;color:var(--fg-m);max-width:700px;margin:0 auto 30px;text-align:left;background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(248,244,248,0.9));padding:24px;border-radius:var(--r);border:1px solid var(--bor);box-shadow:var(--sh);backdrop-filter:blur(4px)}
-.hr-s ul{list-style:none}
-.hr-s li{position:relative;padding-left:28px;margin-bottom:12px}
-.hr-s li:last-child{margin-bottom:0}
-.hr-s li::before{content:'';position:absolute;left:0;top:6px;width:10px;height:10px;background:linear-gradient(135deg,var(--acc-d),var(--acc));border-radius:50%}
-.hr-s strong{color:var(--fg)}
-
-/* Contribute CTA */
-.cc{background:linear-gradient(135deg, var(--ter-p), var(--sky-p));border-radius:var(--r);padding:20px 30px;text-align:center;margin:0 auto 40px;max-width:800px;border:1px solid var(--bor);box-shadow:var(--sh);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
-.cc-cnt{flex:1;min-width:200px;text-align:left}
-.cc h3{font-size:1.1rem;margin-bottom:4px;color:var(--fg)}
-.cc p{color:var(--fg-m);font-size:0.9rem;margin:0}
-.cc-act{flex-shrink:0}
-
-/* Stats */
-.st{display:flex;justify-content:center;gap:40px;padding:24px 0;margin-bottom:40px;border-bottom:1px solid var(--bor);flex-wrap:wrap}
-.st-i{text-align:center}
-.st-v{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--acc-d),var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.st-l{font-size:0.85rem;color:var(--fg-m);margin-top:2px}
-
-/* Search */
-.sc{position:relative;max-width:480px;margin:0 auto 24px}
-.sc-i{width:100%;padding:16px 20px 16px 52px;background:var(--bg-c);border:2px solid var(--bor);border-radius:var(--rl);font-family:inherit;font-size:1rem;transition:0.3s;box-shadow:var(--sh)}
-.sc-i:focus{outline:none;border-color:var(--acc)}
-.sc-x{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--fg-m);pointer-events:none}
-
-/* Quiz CTA */
-.qc-ct{text-align:center;margin-bottom:30px}
-
-/* Alphabet */
-.al{margin-bottom:30px}
-.al-l{font-size:0.8rem;font-weight:600;color:var(--fg-m);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;text-align:center}
-.al-n{display:grid;grid-template-columns:repeat(13,1fr);gap:6px;max-width:700px;margin:0 auto}
-.al-b{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--rose-p);border:2px solid transparent;border-radius:10px;color:var(--rose);font-weight:700;font-size:0.9rem;cursor:pointer;transition:0.3s}
-.al-b:hover:not(:disabled){background:var(--lav-p);color:var(--lav);transform:translateY(-2px);box-shadow:0 4px 12px rgba(184,168,200,0.3)}
-.al-b.on{background:linear-gradient(135deg,var(--acc-d),var(--acc));color:#fff;box-shadow:0 6px 20px rgba(200,80,122,0.3)}
-.al-b:disabled{opacity:0.35;cursor:not-allowed;background:var(--bg-s);color:var(--fg-m)}
-.al-b.ht{position:relative}
-.al-b.ht::after{content:'';position:absolute;bottom:3px;right:3px;width:5px;height:5px;background:var(--acc-d);border-radius:50%}
-.al-b.on.ht::after{background:#fff}
-
-/* Tags */
-.tg-sc{margin-bottom:36px;padding:24px;background:var(--bg-c);border-radius:var(--rl);border:1px solid var(--bor);box-shadow:var(--sh);position:relative;overflow:hidden}
-.tg-sc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--acc-d),var(--lav),var(--sky),var(--cor))}
-.tg-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.tg-t{font-size:1rem;font-weight:700}
-.tg-t span{color:var(--acc-d)}
-.tg-c{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.tg-i{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--blu-p);border-radius:50px;font-size:0.85rem;font-weight:600;color:var(--blu);cursor:pointer;transition:0.3s}
-.tg-i:hover{transform:translateY(-2px)}
-.tg-n{padding:2px 8px;background:rgba(255,255,255,0.6);border-radius:50px;font-size:0.7rem;font-weight:700;color:var(--blu)}
-
-/* Tag ON state - MUST come after specific tag classes */
-.tg-i.on{background:linear-gradient(135deg,var(--acc-d),var(--acc))!important;color:#fff!important}
-.tg-i.on .tg-n{background:rgba(255,255,255,0.25)!important;color:#fff!important}
-
-/* Tag specific colors */
-.tg-i.tl{background:var(--emd-p);color:var(--emd)}.tg-i.tl .tg-n{color:var(--emd)}
-.tg-i.ts{background:var(--sky-p);color:var(--sky)}.tg-i.ts .tg-n{color:var(--sky)}
-.tg-i.td{background:var(--ter-p);color:var(--ter)}.tg-i.td .tg-n{color:var(--ter)}
-.tg-i.tso{background:var(--rose-p);color:var(--rose)}.tg-i.tso .tg-n{color:var(--rose)}
-.tg-i.tla{background:var(--sec-p);color:var(--sec)}.tg-i.tla .tg-n{color:var(--sec)}
-
-/* Show All Button - Teal default, Pink when ON */
-#saBt{background:linear-gradient(135deg,#4aaa9a,#5abaa8);color:#fff;border:none;font-weight:600;box-shadow:0 4px 12px rgba(74,170,154,0.3);padding:6px 14px;font-size:0.8rem}
-#saBt:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(74,170,154,0.4)}
-#saBt.on{background:linear-gradient(135deg,var(--acc-d),var(--acc));box-shadow:0 4px 12px rgba(200,80,122,0.35)}
-#saBt.on:hover{box-shadow:0 6px 16px rgba(200,80,122,0.45)}
-
-/* Content */
-.cn{display:grid;grid-template-columns:1fr;gap:24px;margin-bottom:40px}
-
-/* Cards */
-.cd{background:var(--bg-c);border:1px solid var(--bor);border-radius:var(--rl);overflow:hidden;transition:0.3s;box-shadow:var(--sh)}
-.cd:hover{border-color:var(--acc);box-shadow:var(--shl);transform:translateY(-4px)}
-.cd.bk{border-color:var(--sec);position:relative}
-.cd.bk::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--sec),var(--cor))}
-.cd-h{display:flex;align-items:flex-start;gap:16px;padding:20px;background:linear-gradient(135deg,var(--bg-s),var(--bg-c));border-bottom:1px solid var(--bor)}
-.cd-l{width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--acc-d),var(--acc));border-radius:12px;font-size:1.4rem;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 6px 16px rgba(200,80,122,0.3)}
-.cd-tg{flex:1;min-width:0}
-.cd-tt{font-size:1.35rem;font-weight:700;color:var(--fg)}
-.cd-a{display:flex;gap:8px}
-.cd-b{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:var(--bg-c);border:1px solid var(--bor);border-radius:10px;color:var(--fg-m);cursor:pointer;transition:0.3s}
-.cd-b:hover{border-color:var(--acc);color:var(--acc-d);background:var(--acc-p)}
-.cd-b.on{background:var(--acc-p);border-color:var(--sec);color:var(--sec)}
-.cd-bd{padding:20px}
-.cd-d{font-size:1rem;line-height:1.7;color:var(--fg);margin-bottom:16px}
-.cd-sc{display:flex;flex-direction:column;gap:12px}
-
-.ib{padding:14px 16px;border-radius:var(--r);border-left:4px solid;background:var(--bg-s)}
-.ib.cx{border-color:var(--sky);background:var(--sky-p)}
-.ib.ex{border-color:var(--lav);background:var(--lav-p)}
-.ib.lg{border-color:var(--emd);background:var(--emd-p)}
-.ib.hs{border-color:var(--amb);background:var(--amb-p)}
-.ib.rl{border-color:var(--fg-m)}
-.ib.db{border-color:var(--cor);background:var(--cor-p)}
-.ib.lt{border-color:var(--ter);background:var(--ter-p)}
-.ib.ar{border-color:var(--rose);background:var(--rose-p)}
-.ib.lc{border-color:#9a8ab8;background:#f0edf4}
-.ib.sf{border-color:#8ab8a8;background:#e8f4f0}
-.ib.cr{border-color:#b8a888;background:#f4f0e8}
-.ib-l{display:flex;align-items:center;gap:6px;font-size:0.75rem;font-weight:600;color:var(--fg-m);margin-bottom:8px;text-transform:uppercase}
-.ib p{font-size:0.9rem;color:var(--fg);line-height:1.6}
-
-.cd-tx{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;padding-top:16px;border-top:1px solid var(--bor)}
-.cd-t2{padding:5px 12px;background:var(--lav-p);border-radius:50px;font-size:0.75rem;font-weight:500;color:var(--ter);cursor:pointer;transition:0.3s}
-.cd-t2:hover{background:var(--rose-p);color:var(--acc-d)}
-
-/* Teacher Panel */
-.tp{display:none;margin-bottom:30px;background:var(--bg-c);border:2px solid var(--acc);border-radius:var(--rl);overflow:hidden;box-shadow:var(--shl)}
-.tp.v{display:block}
-.tp-h{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:var(--acc-p);border-bottom:1px solid var(--bor)}
-.tp-tt{font-weight:600;color:var(--acc-d)}
-.lb{padding:28px;text-align:center}
-.lb h3{margin-bottom:10px}
-.lb p{color:var(--fg-m);margin-bottom:20px}
-.lb-f{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.pw{padding:12px 16px;background:var(--bg-s);border:2px solid var(--bor);border-radius:var(--r);font-family:monospace;width:200px}
-.pw:focus{outline:none;border-color:var(--acc)}
-
-.td{display:none}
-.td.v{display:block}
-.tt{display:flex;gap:4px;padding:14px 16px;background:var(--bg-s);overflow-x:auto;border-bottom:1px solid var(--bor)}
-.tb{padding:10px 18px;background:transparent;border:none;border-radius:var(--r);font-family:inherit;font-size:0.9rem;font-weight:600;color:var(--fg-m);cursor:pointer;transition: 0.3s;white-space:nowrap}
-.tb:hover{background:var(--bg-c);color:var(--fg)}
-.tb.on{background:var(--acc);color:#fff}
-.tc{display:none;padding:20px}
-.tc.on{display:block}
-
-.pc{padding:18px;background:var(--bg-s);border:1px solid var(--war);border-radius:var(--r);margin-bottom:12px;border-left:4px solid var(--war)}
-.pc-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.pc-a{display:flex;gap:8px;margin-top:14px}
-
-/* Import Export */
-.up-a{border:2px dashed var(--bor);border-radius:var(--r);padding:32px;text-align:center;cursor:pointer;transition:0.3s}
-.up-a:hover{border-color:var(--acc);background:var(--acc-p)}
-.up-x{width:40px;height:40px;margin:0 auto 12px;color:var(--fg-m)}
-.up-t{font-size:0.95rem;color:var(--fg-m);margin-bottom:6px}
-.up-h{font-size:0.8rem;color:var(--fg-m);opacity:0.7}
-.up-i{display:none}
-.ip-p{display:none;margin-top:16px;padding:16px;background:var(--bg-s);border-radius:var(--r)}
-.ip-p.v{display:block}
-.ip-pt{font-weight:600;margin-bottom:10px}
-.ip-pl{max-height:180px;overflow-y:auto}
-.ip-pi{padding:8px 12px;background:var(--bg-c);border-radius:6px;margin-bottom:6px;font-size:0.85rem}
-
-/* Modal */
-.mo{display:none;position:fixed;inset:0;background:rgba(45,42,38,0.5);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
-.mo.v{display:flex}
-.mm{background:var(--bg-c);border-radius:var(--rl);width:100%;max-width:680px;max-height:90vh;overflow-y:auto;box-shadow:var(--shl);margin:auto}
-.mm.mq{max-width:520px}
-.mh{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--bor);background:var(--bg-s);position:sticky;top:0}
-.mt{font-size:1.2rem;font-weight:700}
-.mx{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--bg-c);border:1px solid var(--bor);border-radius:10px;color:var(--fg-m);cursor:pointer;font-size:1.4rem;transition:0.3s}
-.mx:hover{background:var(--dan);border-color:var(--dan);color:#fff}
-.mb{padding:24px;max-height:calc(90vh - 80px);overflow-y:auto}
-
-/* Quiz */
-.qc2{text-align:center}
-.qp{display:flex;justify-content:center;gap:5px;margin-bottom:20px;flex-wrap:wrap}
-.qd{width:8px;height:8px;border-radius:50%;background:var(--bor);transition:0.3s}
-.qd.cu{background:var(--ter);transform:scale(1.3)}
-.qd.co{background:var(--suc)}
-.qd.wr{background:var(--dan)}
-.qk{background:linear-gradient(135deg,var(--lav-p),var(--rose-p));border-radius:var(--rl);padding:28px;margin-bottom:20px}
-.ql{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;background:linear-gradient(135deg,var(--ter),var(--lav));border-radius:10px;color:#fff;font-size:1.2rem;font-weight:800;margin-bottom:12px}
-.qm{font-size:1.5rem;font-weight:700;margin-bottom:6px}
-.qh{font-size:0.85rem;color:var(--fg-m);font-style:italic}
-.qta{width:100%;min-height:100px;padding:14px;background:var(--bg-s);border:2px solid var(--bor);border-radius:var(--r);font-family:inherit;font-size:0.95rem;resize:vertical;transition:0.3s}
-.qta:focus{outline:none;border-color:var(--ter)}
-.qr{display:none;text-align:left;background:var(--bg-s);border-radius:var(--r);padding:16px;margin-bottom:20px}
-.qr.v{display:block}
-.qr-l{font-size:0.8rem;font-weight:600;color:var(--ter);text-transform:uppercase;margin-bottom:8px}
-.qf{display:none;padding:14px;border-radius:var(--r);margin-bottom:20px;font-weight:600}
-.qf.v{display:block}
-.qf.co{background:var(--emd-p);color:var(--emd);border-left:4px solid var(--emd)}
-.qf.wr{background:var(--rose-p);color:var(--acc-d);border-left:4px solid var(--acc-d)}
-.qa{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.qs{text-align:center;padding:30px 16px}
-.qs-v{font-size:3.5rem;font-weight:800;background:linear-gradient(135deg,var(--ter),var(--acc-d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
-.qs-l{font-size:1.1rem;color:var(--fg-m);margin-bottom:20px}
-.qo{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:20px}
-.qo2{padding:10px 18px;background:var(--bg-s);border:2px solid var(--bor);border-radius:50px;font-size:0.85rem;cursor:pointer;transition:0.3s;font-family:inherit;font-weight:500}
-.qo2:hover{border-color:var(--ter);background:var(--ter-p)}
-.qo2.on{border-color:var(--ter);background:var(--ter-p);color:var(--ter)}
-.q-ev{background:var(--emd-p);border:1px solid var(--emd);border-radius:var(--r);padding:16px;margin-bottom:20px;text-align:center}
-.q-ev-t{font-size:0.85rem;color:var(--emd);font-weight:600;margin-bottom:8px}
-.q-ev-d{font-size:0.9rem;color:var(--fg-m)}
-.q-cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;text-align:left}
-.q-cmp-i{padding:12px;background:var(--bg-c);border-radius:var(--r);border:1px solid var(--bor)}
-.q-cmp-i.yr{border-color:var(--lav);background:var(--lav-p)}
-.q-cmp-l{font-size:0.7rem;font-weight:600;color:var(--fg-m);text-transform:uppercase;margin-bottom:4px}
-.q-cmp-v{font-size:0.9rem;color:var(--fg);line-height:1.5}
-
-/* Quiz Buttons - HOVER CORRETTO per "Ho indovinato" */
-.q-btn-co{background:linear-gradient(135deg,#4a9a6a,#5aaa7a);color:#fff;border:none;padding:12px 28px;border-radius:var(--r);font-family:inherit;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.25s ease;box-shadow:0 4px 12px rgba(74,154,106,0.3)}
-.q-btn-co:hover{background:linear-gradient(135deg,#3a8a5a,#4a9a6a);transform:translateY(-3px);box-shadow:0 8px 20px rgba(74,154,106,0.45)}
-.q-btn-co:active{transform:translateY(-1px)}
-.q-btn-wr{background:var(--bg-s);color:var(--dan);border:2px solid var(--dan);padding:12px 28px;border-radius:var(--r);font-family:inherit;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.25s ease}
-.q-btn-wr:hover{background:var(--rose-p);transform:translateY(-3px);border-color:var(--dan);box-shadow:0 6px 16px rgba(200,128,128,0.25)}
-.q-btn-wr:active{transform:translateY(-1px)}
-
-/* Form */
-.fs{margin-bottom:20px;padding:18px;background:var(--bg-c);border-radius:var(--r);border-left:4px solid var(--acc)}
-.fs-tt{font-size:1rem;font-weight:600;margin-bottom:14px;color:var(--acc-d)}
-.fg{margin-bottom:14px}
-.fg:last-child{margin-bottom:0}
-.fl{display:block;font-size:0.85rem;font-weight:500;margin-bottom:6px}
-.fi,.ft,.fsl{width:100%;padding:12px 14px;background:var(--bg-c);border:2px solid var(--bor);border-radius:var(--r);font-family:inherit;font-size:0.9rem;transition:0.3s}
-.fi:focus,.ft:focus,.fsl:focus{outline:none;border-color:var(--acc)}
-.ft{min-height:80px;resize:vertical}
-.fa{display:flex;gap:12px;justify-content:flex-end;margin-top:24px;flex-wrap:wrap}
-
-/* Form Sections Colors */
-.fs.f1{border-color:var(--acc)}
-.fs.f2{border-color:var(--sky)}
-.fs.f3{border-color:var(--amb)}
-.fs.f4{border-color:var(--ter)}
-.fs.f1 .fs-tt{color:var(--acc-d)}
-.fs.f2 .fs-tt{color:var(--sky)}
-.fs.f3 .fs-tt{color:var(--amb)}
-.fs.f4 .fs-tt{color:var(--ter)}
-
-/* Toast */
-.to{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--suc);color:#fff;padding:14px 24px;border-radius:var(--r);font-weight:600;z-index:1002;opacity:0;transition:0.3s;display:flex;align-items:center;gap:10px;box-shadow:0 8px 28px rgba(124,168,144,0.4)}
-.to.v{transform:translateX(-50%) translateY(0);opacity:1}
-
-/* Footer */
-.ft2{padding:40px 0;text-align:center;border-top:1px solid var(--bor);margin-top:60px;background:linear-gradient(180deg,transparent 0%,rgba(248,246,244,0.8) 100%)}
-.ft2 p{color:var(--fg-m);font-size:0.9rem}
-.ft2 strong{color:var(--fg)}
-
-/* Bookmarks */
-.bm{position:fixed;right:20px;bottom:20px;z-index:99}
-.bp{position:fixed;right:-380px;top:0;bottom:0;width:360px;max-width:90vw;background:var(--bg-c);border-left:1px solid var(--bor);z-index:100;transition:right 0.35s ease;display:flex;flex-direction:column;box-shadow:var(--shl)}
-.bp.v{right:0}
-.bh{display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid var(--bor);background:var(--bg-s)}
-.bh-t{font-weight:600}
-.bl{flex:1;overflow-y:auto;padding:16px}
-.bi{padding:14px;background:var(--bg-s);border-radius:var(--r);margin-bottom:8px;cursor:pointer;transition:0.3s;border:1px solid transparent}
-.bi:hover{background:var(--lav-p);border-color:var(--ter)}
-.bi-tt{font-weight:600}
-.bi-p{font-size:0.8rem;color:var(--fg-m);margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.eb{text-align:center;padding:40px 16px;color:var(--fg-m)}
-
-/* Scroll Top */
-.st2{position:fixed;bottom:80px;right:20px;width:46px;height:46px;background:linear-gradient(135deg,var(--acc-d),var(--acc));color:#fff;border:none;border-radius:50%;cursor:pointer;opacity:0;visibility:hidden;transition:0.3s;box-shadow:0 4px 16px rgba(200,80,122,0.3);z-index:98}
-.st2.v{opacity:1;visibility:visible}
-.st2:hover{transform:translateY(-3px)}
-
-/* Filters Status */
-.fs2{display:none;justify-content:space-between;align-items:center;margin-bottom:16px;padding:12px 16px;background:var(--bg-c);border-radius:var(--r);border:1px solid var(--bor);flex-wrap:wrap;gap:10px}
-.fs2.v{display:flex}
-.af{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.fc{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:var(--lav-p);color:var(--ter);border-radius:50px;font-size:0.8rem;font-weight:500}
-.fc.lt{background:var(--rose-p);color:var(--rose)}
-
-/* Responsive */
-@media(max-width:900px){.al-n{grid-template-columns:repeat(9,1fr);max-width:400px}}
-@media(max-width:768px){
-.st{gap:24px}.st-v{font-size:1.8rem}.hr h1{font-size:2rem}
-.al-n{grid-template-columns:repeat(7,1fr);max-width:320px}
-.bp{width:100%;right:-100%}
-.hd-a{width:100%;justify-content:center}
-.role-toggle{width:100%;justify-content:center}
-.cc{flex-direction:column;text-align:center}
-.cc-cnt{text-align:center;margin-bottom:10px}
-.q-cmp{grid-template-columns:1fr}
-}
-@media(max-width:480px){.al-n{grid-template-columns:repeat(6,1fr);gap:5px}.al-b{font-size:0.8rem}}
-@media print{.hd,.tp,.qc-ct,.al,.tg-sc,.cc,.bm,.bp,.mo,.to,.st2,.fs2{display:none!important}}
-</style>
-</head>
-<body>
-<header class="hd">
-<div class="ct">
-<div class="hd-c">
-<a href="#" class="lg"><div class="lg-i">AP</div><div class="lg-t">Alfabeto della <span>Parita</span></div></a>
-<div class="hd-a">
-<button class="bt bt-c" id="prBt">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-Stampa PDF
-</button>
-<div class="role-toggle">
-<span id="sl" class="active">Studente</span>
-<div id="rTg" class="toggle-sw" role="switch" tabindex="0"></div>
-<span id="tl">Docente</span>
-</div>
-</div>
-</div>
-</div>
-</header>
-
-<div id="tp" class="tp">
-<div class="tp-h">
-<span class="tp-tt">Area Riservata Docente</span>
-<button id="loBt" class="bt bt-g" style="display:none">Esci</button>
-</div>
-<div id="lb" class="lb">
-<h3>Accesso Docente</h3>
-<p>Inserisci la password per accedere alla gestione.</p>
-<div class="lb-f">
-<input type="password" id="pwI" class="pw" placeholder="Password">
-<button id="lgBt" class="bt bt-p">Accedi</button>
-</div>
-</div>
-<div id="td" class="td">
-<div class="tt">
-<button class="tb on" data-t="pe">In Attesa (<span id="pc">0</span>)</button>
-<button class="tb" data-t="ad">Aggiungi</button>
-<button class="tb" data-t="im">Importa</button>
-<button class="tb" data-t="mn">Gestisci</button>
-<button class="tb" data-t="ex">Esporta</button>
-</div>
-<div id="tc-pe" class="tc on"><div id="pl"></div></div>
-<div id="tc-ad" class="tc"><form id="mf"></form></div>
-<div id="tc-im" class="tc">
-<h3 style="margin-bottom:14px;font-size:1.1rem">Importa Termini da File</h3>
-<p style="color:var(--fg-m);margin-bottom:20px">Carica un file JSON o CSV per aggiungere nuovi termini al glossario.</p>
-<div class="up-a" id="upA">
-<svg class="up-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-<p class="up-t">Trascina qui il file o clicca per selezionare</p>
-<p class="up-h">Formati supportati: JSON, CSV</p>
-<input type="file" id="fi" class="up-i" accept=".json,.csv">
-</div>
-<div id="ipP" class="ip-p">
-<div class="ip-pt">Anteprima termini da importare:</div>
-<div id="ipL" class="ip-pl"></div>
-<div class="fa" style="margin-top:16px">
-<button class="bt bt-s" id="ciBt">Annulla</button>
-<button class="bt bt-p" id="cfBt">Conferma Importazione</button>
-</div>
-</div>
-</div>
-<div id="tc-mn" class="tc">
-<input type="text" id="msI" class="fi" placeholder="Cerca termini..." style="margin-bottom:14px">
-<div id="ml"></div>
-</div>
-<div id="tc-ex" class="tc">
-<p style="margin-bottom:16px;color:var(--fg-m)">Esporta i dati del glossario in formato JSON o CSV.</p>
-<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
-<button class="bt bt-p" id="ejBt">Scarica JSON</button>
-<button class="bt bt-s" id="ecBt">Scarica CSV</button>
-</div>
-<div class="fs-tt">Anteprima JSON:</div>
-<textarea id="ea" class="ft" style="font-family:monospace;font-size:0.75rem" rows="8" readonly></textarea>
-</div>
-</div>
-</div>
-
-<main class="ct">
-<section class="hr">
-<div class="hr-b">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
-Progetto Educativo Interdisciplinare
-</div>
-<h1>Scopri l'<span class="hl">Alfabeto della Parita</span></h1>
-<div class="hr-s">
-<ul>
-<li><strong>Smontare gli stereotipi di genere:</strong> Analizza come il linguaggio comune influenzi la percezione dei ruoli femminili nella scienza e nella societa</li>
-<li><strong>Costruire competenze etiche:</strong> Prepara i futuri periti biotecnologici a operare in contesti professionali inclusivi e rispettosi</li>
-<li><strong>Formare cittadini attivi:</strong> Fornisce il lessico essenziale per riconoscere le discriminazioni e promuovere una cultura dell'uguaglianza</li>
-</ul>
-</div>
-</section>
-
-<section class="cc">
-<div class="cc-cnt">
-<h3>Progetto Collaborativo</h3>
-<p>Contribuisci ad arricchire il glossario con esempi e approfondimenti.</p>
-</div>
-<div class="cc-act">
-<button class="bt bt-p" id="cnBt">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-Aggiungi Contributo
-</button>
-</div>
-</section>
-
-<section class="st">
-<div class="st-i"><div class="st-v" id="ttV">0</div><div class="st-l">Termini</div></div>
-<div class="st-i"><div class="st-v" id="tlV">0</div><div class="st-l">Lettere</div></div>
-<div class="st-i"><div class="st-v" id="teV">0</div><div class="st-l">Esempi</div></div>
-<div class="st-i"><div class="st-v" id="tpV">0</div><div class="st-l">In Attesa</div></div>
-</section>
-
-<section style="margin-bottom:30px">
-<div class="sc">
-<svg class="sc-x" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21L16.65 16.65"/></svg>
-<input type="text" id="si" class="sc-i" placeholder="Cerca un termine nel glossario...">
-</div>
-</section>
-
-<section class="qc-ct">
-<button class="bt bt-q" id="qBt">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-Modalita Quiz
-</button>
-</section>
-
-<section class="al">
-<div class="al-l">Naviga per lettera</div>
-<div class="al-n" id="aN"></div>
-</section>
-
-<section class="tg-sc">
-<div class="tg-h">
-<div class="tg-t">Filtra per argomento <span id="tgCt"></span></div>
-<button id="saBt" class="bt">Mostra tutti</button>
-</div>
-<div class="tg-c" id="tgC"></div>
-</section>
-
-<div id="fsW" class="fs2">
-<div id="af" class="af"></div>
-<button id="cfBt2" class="bt bt-g" style="padding:5px 12px;font-size:0.8rem">Cancella filtri</button>
-</div>
-
-<section class="cn" id="gc"></section>
-</main>
-
-<footer class="ft2">
-<div class="ct">
-<p><strong>Progetto "Alfabeto della Parita"</strong></p>
-<p style="margin-top:6px">Un percorso educativo per unire precisione terminologica giuridica e scientifico alla sensibilita umanistica.</p>
-</div>
-</footer>
-
-<button id="stBt" class="st2" aria-label="Torna su">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
-
-<div class="bm">
-<button id="bmBt" class="bt bt-s bt-i" aria-label="Preferiti">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-</button>
-</div>
-
-<aside id="bp" class="bp">
-<div class="bh">
-<span class="bh-t">I tuoi preferiti</span>
-<button id="cbBt" class="bt bt-g bt-i" aria-label="Chiudi">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-</button>
-</div>
-<div id="bl" class="bl"></div>
-</aside>
-
-<!-- Modals -->
-<div id="qm" class="mo">
-<div class="mm mq">
-<div class="mh">
-<h2 class="mt">Modalita Quiz</h2>
-<button class="mx" id="cqM" aria-label="Chiudi">&times;</button>
-</div>
-<div class="mb"><div id="qc2" class="qc2"></div></div>
-</div>
-</div>
-
-<div id="cm" class="mo">
-<div class="mm">
-<div class="mh">
-<h2 class="mt">Contribuisci al Glossario</h2>
-<button class="mx" id="ccM" aria-label="Chiudi">&times;</button>
-</div>
-<div class="mb"><form id="cf"></form></div>
-</div>
-</div>
-
-<div id="em" class="mo">
-<div class="mm">
-<div class="mh">
-<h2 class="mt">Modifica Termine</h2>
-<button class="mx" id="ceM" aria-label="Chiudi">&times;</button>
-</div>
-<div class="mb"><form id="ef"></form></div>
-</div>
-</div>
-
-<div id="to" class="to" role="alert">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-<span id="ts"></span>
-</div>
-
-<script>
-(function(){
-'use strict';
-
-// === DATI COMPLETI ===
-var BD=[
-{id:1,letter:'A',term:'Autodeterminazione',definition:'Diritto fondamentale di ogni persona di prendere decisioni autonome riguardo la propria vita, corpo, carriera e futuro senza costrizioni esterne.',context:'Nel campo biotecnologico, l\'autodeterminazione si manifesta nella liberta di scelta delle carriere STEM senza stereotipi di genere.',example:'Una studentessa sceglie di specializzarsi in ingegneria genetica seguendo la propria passione.',legal:'Art. 3 Costituzione Italiana',tags:['diritti','autonomia']},
-{id:2,letter:'B',term:'Bilancio di Genere',definition:'Strumento di analisi economica che valuta l\'impatto delle politiche sulle diverse identita di genere.',context:'Nelle aziende biotecnologiche analizza investimenti in formazione e accesso ai fondi di ricerca.',example:'Un\'azienda farmaceutica verifica se i finanziamenti vengono assegnati equamente.',tags:['economia','lavoro']},
-{id:3,letter:'C',term:'Conciliazione',definition:'Insieme di politiche che permettono di armonizzare vita lavorativa, familiare e personale.',context:'Include flessibilita oraria, congedi parentali paritari, lavoro agile.',example:'Un laboratorio offre orari flessibili e supporto per il rientro post-maternita.',history:'Conquiste storiche: Diritto di voto (1946)',tags:['lavoro','famiglia']},
-{id:4,letter:'D',term:'Discriminazione',definition:'Trattamento ingiusto verso una persona basato su caratteristiche come genere, etnia, orientamento.',context:'Forme: minore accesso a posizioni di responsabilita, gap salariale, stereotipi.',example:'Una ricercatrice viene esclusa da una promozione perche "potrebbe avere figli".',legal:'Costituzione art. 3',tags:['diritti','legal']},
-{id:5,letter:'E',term:'Empowerment',definition:'Processo di acquisizione di potere, autonomia e consapevolezza dei propri diritti.',context:'Promuovere role models femminili nella scienza, mentorship.',example:'Un programma di mentoring collega studentesse con ricercatrici affermate.',tags:['autonomia','crescita']},
-{id:6,letter:'F',term:'Femminismo',definition:'Movimento sociale che promuove l\'uguaglianza di diritti tra tutti i generi.',context:'Il femminismo contemporaneo e intersezionale.',example:'Studenti organizzano un dibattito sulla rappresentanza femminile nelle STEM.',history:'Prima ondata: suffragio. Seconda: diritti riproduttivi. Terza: intersezionalita',tags:['movimento','diritti']},
-{id:7,letter:'G',term:'Genere',definition:'Costrutto sociale che definisce ruoli e comportamenti appropriati per uomini e donne.',context:'SESSO = biologico; GENERE = costruzione sociale.',example:'Dire "le ragazze non sono portate per la matematica" e uno stereotipo.',tags:['identita','social']},
-{id:8,letter:'G',term:'Gender Gap',definition:'Differenze sistematiche tra uomini e donne in salari, posizioni, accesso alla ricerca.',context:'Scarsa rappresentanza femminile in ruoli dirigenziali.',example:'Solo il 15% dei dirigenti sono donne, nonostante il 50% dei ricercatori junior.',tags:['lavoro','economia']},
-{id:9,letter:'G',term:'Glass Ceiling',definition:'Barriera invisibile che impedisce alle donne di accedere ai livelli piu alti.',context:'Scarsa presenza di donne in direzione scientifica e presidenze.',example:'Una ricercatrice viene sorpassata nelle promozioni da colleghi meno qualificati.',history:'Termine coniato nel 1986',tags:['lavoro','carriera']},
-{id:10,letter:'H',term:'Harassment',definition:'Comportamenti indesiderati che violano la dignita della persona.',context:'Commenti inappropriati, avances non gradite, contatto fisico non consensuale.',example:'Un superiore fa commenti sull\'aspetto fisico di una stagista.',legal:'Reato perseguibile penalmente.',tags:['diritti','legal']},
-{id:11,letter:'I',term:'Inclusione',definition:'Processo per creare ambienti dove tutte le persone possano partecipare pienamente.',context:'Politiche di assunzione inclusive, formazione sulla diversita.',example:'Un\'azienda garantisce pari opportunita e crea gruppi di supporto.',tags:['diversita','lavoro']},
-{id:12,letter:'J',term:'Justice',definition:'Principio di equita che richiede la rimozione di sistemi che perpetuano disuguaglianze.',context:'Rappresentanza femminile in comitati etici.',example:'Un comitato etico include pari rappresentanza di genere.',tags:['diritti','etica']},
-{id:13,letter:'K',term:'Knowledge Gap',definition:'Divario nella produzione e accesso delle conoscenze scientifico.',context:'Le ricercatrici pubblicano meno e sono citate meno frequentemente.',example:'Paper firmati da donne ricevono meno citazioni.',tags:['scientifico','ricerca']},
-{id:14,letter:'L',term:'Lavoro',definition:'Principio di parita di retribuzione per stesso lavoro.',context:'Nel settore biotecnologico persiste un gap retributivo.',example:'Due tecnici con stessa esperienza dovrebbero ricevere lo stesso stipendio.',legal:'Costituzione art. 37',tags:['lavoro','economia']},
-{id:15,letter:'M',term:'Mainstreaming',definition:'Strategia che integra la prospettiva di genere in tutte le politiche.',context:'Considerare l\'impatto di genere nelle decisioni su ricerca e organizzazione.',example:'Un\'universita considera le esigenze di conciliazione nei nuovi laboratori.',tags:['politiche','organizzazione']},
-{id:16,letter:'N',term:'Non-violenza',definition:'Principio etico che rifiuta l\'uso della violenza fisica, psicologica, economica.',context:'Lotta contro ogni forma di violenza di genere.',example:'Campagne di sensibilizzazione nelle scuole.',tags:['diritti','social']},
-{id:17,letter:'O',term:'Opportunita',definition:'Principio che garantisce le stesse possibilita di accesso a istruzione e lavoro.',context:'Accesso equo a borse di studio, posizioni di ricerca.',example:'Un bando dottorato usa criteri oggettivi.',tags:['diritti','lavoro']},
-{id:18,letter:'P',term:'Parita',definition:'Condizione di uguaglianza formale e sostanziale tra individui.',context:'Stesse opportunita di carriera, uguale retribuzione.',example:'Un\'organizzazione con 50% di donne in posizioni dirigenziali.',legal:'Costituzione art. 3',tags:['diritti','fondamentale']},
-{id:19,letter:'Q',term:'Quote Rosa',definition:'Misure che prevedono una percentuale minima di rappresentanza femminile.',context:'Legge Golfo-Mosca (2011): almeno 1/3 di donne nei CDA.',example:'Un\'azienda rispetta la quota del 33%.',legal:'Legge 120/2011',tags:['politiche','legal']},
-{id:20,letter:'R',term:'Rispetto',definition:'Riconoscimento del valore e dei diritti di ogni persona.',context:'Comunicazione rispettosa, valorizzazione delle competenze.',example:'Un team dove le idee di tutti vengono ascoltate.',tags:['etica','social']},
-{id:21,letter:'S',term:'Suffragio',definition:'Diritto di voto. In Italia le donne lo ottennero nel 1946.',context:'Conquista storica fondamentale.',example:'Il 2 giugno 1946 le donne votarono per la prima volta.',history:'1946: primo voto delle donne in Italia',tags:['diritti','storia']},
-{id:22,letter:'S',term:'STEM',definition:'Acronimo per Science, Technology, Engineering, Mathematics.',context:'In Italia solo il 16-18% delle laureate sceglie facolta STEM.',example:'Progetti di orientamento con role models femminili.',tags:['educazione','scientifico']},
-{id:23,letter:'S',term:'Sessismo Benevolo',definition:'Forma subdola di sessismo che rafforza stereotipi pur apparendo positiva.',context:'"Le donne sono naturalmente piu portate per la cura".',example:'Un professore scoraggia una studentessa dicendo che l\'ambiente e troppo competitivo.',tags:['stereotipi','social']},
-{id:24,letter:'S',term:'Sorellanza',definition:'Solidarieta e alleanza tra donne per contrastare discriminazioni.',context:'Mentoring tra donne, reti di supporto.',example:'Ricercatrici senior mentorizzano giovani colleghe.',tags:['solidarieta','social']},
-{id:25,letter:'T',term:'Trattamento',definition:'Principio che garantisce stesso trattamento in situazioni analoghe.',context:'Stesse opportunita di assunzione, formazione, avanzamento.',example:'Ricercatori con pari esperienza hanno uguale accesso a strumentazioni.',tags:['diritti','lavoro']},
-{id:26,letter:'U',term:'Uguaglianza',definition:'Principio che riconosce pari dignita e diritti a tutti.',context:'Richiede azioni concrete per rimuovere ostacoli.',example:'Servono asili nido, congedi paritari, lotta agli stereotipi.',legal:'Costituzione art. 3',tags:['diritti','fondamentale']},
-{id:27,letter:'V',term:'Violenza di Genere',definition:'Ogni atto di violenza basata sul genere che provochi danno.',context:'Richiede prevenzione attraverso educazione.',example:'Campagne come "Non una di meno".',legal:'Convenzione di Istanbul (2011)',tags:['diritti','legal']},
-{id:28,letter:'W',term:'Welfare',definition:'Sistema di politiche sociali che tiene conto delle esigenze di genere.',context:'Include asili nido, congedi parentali paritari.',example:'Un\'azienda offre asilo nido aziendale e smart working.',tags:['politiche','lavoro']},
-{id:29,letter:'X',term:'Xenofobia e Intersezionalita',definition:'Analisi di come genere, razza, classe si intersechino.',context:'Donne straniere affrontano doppia discriminazione.',example:'Una ricercatrice straniera viene sottovalutata.',tags:['diversita','social']},
-{id:30,letter:'Y',term:'Youth Empowerment',definition:'Processo di potenziamento delle giovani generazioni.',context:'Programmi che preparano giovani a riconoscere disuguaglianze.',example:'Studenti analizzano rappresentazioni di genere nei libri.',tags:['educazione','social']},
-{id:31,letter:'Z',term:'Zero Tolerance',definition:'Politiche che non ammettono eccezioni per discriminazioni o molestie.',context:'Codici etici rigorosi, canali di segnalazione protetti.',example:'Un\'universita licenzia un professore accusato di molestie.',tags:['legal','lavoro']}
-];
-
-// === STATE ===
-var GD=[],PD=[],BK=[],IT=[];
-var FL={l:null,tg:null,s:''};
-var TM=false,TI=false;
-var PW='parita2024';
-var QS={ts:[],ci:0,sc:0,rs:[],sa:false,md:'d',ur:''};
-var saBtOn=false;
-var prevFL={l:null,tg:null,s:''};
-
-// === DOM CACHE ===
-var EL={};
-
-// === INIT ===
-function init(){
-try{
-var sv=localStorage.getItem('gd');
-GD=sv?JSON.parse(sv):BD.slice();
-PD=JSON.parse(localStorage.getItem('pd')||'[]');
-BK=JSON.parse(localStorage.getItem('bk')||'[]');
-}catch(e){GD=BD.slice();PD=[];BK=[];}
-
-EL={
-aN:document.getElementById('aN'),tgC:document.getElementById('tgC'),tgCt:document.getElementById('tgCt'),
-gc:document.getElementById('gc'),si:document.getElementById('si'),fsW:document.getElementById('fsW'),
-af:document.getElementById('af'),bp:document.getElementById('bp'),bl:document.getElementById('bl'),
-tp:document.getElementById('tp'),td:document.getElementById('td'),lb:document.getElementById('lb'),
-pl:document.getElementById('pl'),ml:document.getElementById('ml'),msI:document.getElementById('msI'),
-ea:document.getElementById('ea'),ipP:document.getElementById('ipP'),ipL:document.getElementById('ipL'),
-qc2:document.getElementById('qc2'),to:document.getElementById('to'),ts:document.getElementById('ts')
-};
-
-rAN();rTC();aF();uS();rB();bF();sE();sST();
-}
-
-function sD(){try{localStorage.setItem('gd',JSON.stringify(GD));localStorage.setItem('pd',JSON.stringify(PD));localStorage.setItem('bk',JSON.stringify(BK));}catch(e){}}
-
-// === RENDER ===
-function rAN(){
-var L=[].concat(GD.map(function(i){return i.letter;}));
-L=L.filter(function(v,i,a){return a.indexOf(v)===i;}).sort();
-var N=EL.aN;if(!N)return;
-N.innerHTML='';
-'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){
-var b=document.createElement('button');
-b.className='al-b';
-b.textContent=l;
-b.setAttribute('aria-label','Filtra per lettera '+l);
-if(L.indexOf(l)!==-1){
-b.className+=' ht';
-b.onclick=function(){fL(l);};
-}else{b.disabled=true;}
-N.appendChild(b);
-});
-}
-
-function rTC(){
-var C={};
-GD.forEach(function(i){if(i.tags)i.tags.forEach(function(t){C[t]=(C[t]||0)+1;});});
-var S=Object.entries(C).sort(function(a,b){return b[1]-a[1];});
-var T=EL.tgC;if(!T)return;
-T.innerHTML='';
-S.forEach(function(c){
-var b=document.createElement('button');
-b.className='tg-i';
-if(FL.tg===c[0])b.className+=' on';
-var tc=c[0];
-if(tc==='legal')b.className+=' tl';
-else if(tc==='scientifico')b.className+=' ts';
-else if(tc==='diritti')b.className+=' td';
-else if(tc==='social')b.className+=' tso';
-else if(tc==='lavoro')b.className+=' tla';
-b.innerHTML='#'+c[0]+' <span class="tg-n">'+c[1]+'</span>';
-b.onclick=function(){fT(c[0]);};
-T.appendChild(b);
-});
-if(EL.tgCt)EL.tgCt.textContent=' ('+S.length+' argomenti)';
-}
-
-function aF(){
-var d=GD.slice();
-if(FL.l)d=d.filter(function(i){return i.letter===FL.l;});
-if(FL.tg)d=d.filter(function(i){return i.tags&&i.tags.indexOf(FL.tg)!==-1;});
-if(FL.s){
-var s=FL.s.toLowerCase();
-d=d.filter(function(i){return i.term.toLowerCase().indexOf(s)!==-1||i.definition.toLowerCase().indexOf(s)!==-1;});
-}
-rC(d);uFU();
-}
-
-function uFU(){
-var bs=document.querySelectorAll('.al-b');
-bs.forEach(function(b){
-var iso=b.textContent===FL.l;
-b.className='al-b'+(b.disabled?'':' ht')+(iso?' on':'');
-});
-var ts=document.querySelectorAll('.tg-i');
-ts.forEach(function(t){
-var tn=t.textContent.split(' ')[0].replace('#','');
-if(tn===FL.tg)t.className=t.className+' on';
-else t.className=t.className.replace(' on','');
-});
-var fs=EL.fsW,af=EL.af;
-if(!fs||!af)return;
-var hf=FL.l||FL.tg||FL.s;
-fs.className=hf?'fs2 v':'fs2';
-var h='';
-if(FL.l)h+='<span class="fc lt">Lettera '+FL.l+'</span>';
-if(FL.tg)h+='<span class="fc">Tag: #'+FL.tg+'</span>';
-if(FL.s)h+='<span class="fc">Ricerca: "'+FL.s+'"</span>';
-af.innerHTML=h;
-}
-
-function rC(d){
-var c=EL.gc;if(!c)return;
-if(d.length===0){c.innerHTML='<p style="text-align:center;color:var(--fg-m);padding:40px">Nessun termine trovato.</p>';return;}
-c.innerHTML=d.map(function(i){
-var bk=BK.indexOf(i.id)!==-1;
-var tgH='';
-if(i.tags&&i.tags.length)tgH=i.tags.map(function(t){return'<span class="cd-t2" onclick="fT(\''+t+'\')">#'+t+'</span>';}).join('');
-return'<article class="cd'+(bk?' bk':'')+'" data-id="'+i.id+'"><div class="cd-h"><div class="cd-l">'+i.letter+'</div><div class="cd-tg"><h3 class="cd-tt">'+i.term+'</h3></div><div class="cd-a"><button class="cd-b'+(bk?' on':'')+'" onclick="tB('+i.id+')" aria-label="Preferiti"><svg width="16" height="16" viewBox="0 0 24 24" fill="'+(bk?'currentColor':'none')+'" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>'+(TI?'<button class="cd-b" onclick="oEM('+i.id+')" aria-label="Modifica"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="cd-b" onclick="dT('+i.id+')" aria-label="Elimina" style="color:var(--dan)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>':'')+'</div></div><div class="cd-bd"><p class="cd-d">'+i.definition+'</p><div class="cd-sc">'+(i.context?'<div class="ib cx"><div class="ib-l">Contesto scientifico</div><p>'+i.context+'</p></div>':'')+(i.example?'<div class="ib ex"><div class="ib-l">Esempio pratico</div><p>'+i.example+'</p></div>':'')+(i.legal?'<div class="ib lg"><div class="ib-l">Riferimenti normativi</div><p>'+i.legal+'</p></div>':'')+(i.history?'<div class="ib hs"><div class="ib-l">Cenni storici</div><p>'+i.history+'</p></div>':'')+(i.literature?'<div class="ib lc"><div class="ib-l">Letteratura</div><p>'+i.literature+'</p></div>':'')+(i.art?'<div class="ib ar"><div class="ib-l">Riferimenti artistici</div><p>'+i.art+'</p></div>':'')+(i.reflection?'<div class="ib sf"><div class="ib-l">Spunti di riflessione</div><p>'+i.reflection+'</p></div>':'')+(i.related?'<div class="ib cr"><div class="ib-l">Termini correlati</div><p>'+i.related+'</p></div>':'')+'</div>'+(tgH?'<div class="cd-tx">'+tgH+'</div>':'')+'</div></article>';
-}).join('');
-}
-
-function uS(){
-document.getElementById('ttV').textContent=GD.length;
-document.getElementById('tlV').textContent=[].concat(GD.map(function(i){return i.letter;})).filter(function(v,i,a){return a.indexOf(v)===i;}).length;
-document.getElementById('teV').textContent=GD.filter(function(i){return i.example;}).length;
-document.getElementById('tpV').textContent=PD.length;
-document.getElementById('pc').textContent=PD.length;
-}
-
-function rB(){
-var l=EL.bl;if(!l)return;
-var is=GD.filter(function(i){return BK.indexOf(i.id)!==-1;});
-if(is.length===0){l.innerHTML='<div class="eb">Nessun preferito.</div>';return;}
-l.innerHTML=is.map(function(i){
-return'<div class="bi" onclick="sT('+i.id+')"><div class="bi-tt">'+i.term+'</div><div class="bi-p">'+i.definition.substring(0,60)+'...</div></div>';
-}).join('');
-}
-
-// === FORM FIELDS DEFINITION ===
-function getFormSections(ic){
-return [
-{title:'Informazioni di Base',cls:'f1',fields:[
-{i:'L',l:'Lettera*',y:'sl',r:true},
-{i:'T',l:'Termine*',y:'tx',r:true},
-{i:'D',l:'Definizione*',y:'ta',r:true}
-]},
-{title:'Contesto scientifico e Applicativo',cls:'f2',fields:[
-{i:'Cx',l:'Contesto scientifico',y:'ta',ph:'Inserisci il contesto scientifico o disciplinare...'},
-{i:'Ex',l:'Esempio pratico',y:'ta',ph:'Fornisci un esempio concreto...'},
-{i:'Rf',l:'Spunti di riflessione',y:'ta',ph:'Proponi domande o temi di discussione...'}
-]},
-{title:'Riferimenti Culturali e Storici',cls:'f3',fields:[
-{i:'Hs',l:'Cenni storici',y:'ta',ph:'Riferimenti storici, conquiste sociali...'},
-{i:'Lt',l:'Letteratura e citazioni',y:'ta',ph:'Opere letterarie, autrici...'},
-{i:'Ar',l:'Riferimenti artistici',y:'ta',ph:'Opere d\'arte, film, musica...'}
-]},
-{title:'Aspetti Normativi e Collegamenti',cls:'f4',fields:[
-{i:'Lg',l:'Riferimenti normativi',y:'tx',ph:'Leggi, convenzioni...'},
-{i:'Cr',l:'Termini correlati',y:'tx',ph:'Altri termini collegati...'},
-{i:'Tg',l:'Tag (separati da virgola)',y:'tx',ph:'es: diritti, lavoro, scientifico'}
-]}
-];
-}
-
-function bF(){
-['cf','mf','ef'].forEach(function(fi){
-var f=document.getElementById(fi);if(!f)return;
-var ic=fi==='cf'?'c':fi==='ef'?'e':'m';
-var sections=getFormSections(ic);
-f.innerHTML=sections.map(function(s){
-return'<div class="fs '+s.cls+'"><div class="fs-tt">'+s.title+'</div>'+s.fields.map(function(fd){
-var ph=fd.ph?' placeholder="'+fd.ph+'"':'';
-return'<div class="fg"><label class="fl" for="'+ic+fd.i+'">'+fd.l+'</label>'+(fd.y==='sl'?'<select class="fsl" id="'+ic+fd.i+'"'+(fd.r?' required':'')+'><option value="">Seleziona</option>'+'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(function(l){return'<option value="'+l+'">'+l+'</option>';}).join('')+'</select>':fd.y==='ta'?'<textarea class="ft" id="'+ic+fd.i+'"'+(fd.r?' required':'')+ph+'></textarea>':'<input class="fi" type="text" id="'+ic+fd.i+'"'+(fd.r?' required':'')+ph+'>')+'</div>';
-}).join('')+'</div>';
-}).join('')+'<div class="fa"><button type="button" class="bt bt-s" onclick="'+(fi==='cf'?'cCM()':fi==='ef'?'cEM()':'sTb(\'pe\')')+'">Annulla</button><button type="submit" class="bt bt-p">'+(fi==='ef'?'Salva modifiche':'Invia contributo')+'</button></div>';
-});
-}
-
-// === FILTER ===
-function fL(l){FL.l=FL.l===l?null:l;aF();}
-function fT(t){FL.tg=FL.tg===t?null:t;aF();}
-window.rF=function(k){if(k==='s'){FL.s='';if(EL.si)EL.si.value='';}else{FL[k]=null;}aF();};
-function cAF(){
-FL={l:null,tg:null,s:''};
-if(EL.si)EL.si.value='';
-aF();
-saBtOn=false;
-document.getElementById('saBt').classList.remove('on');
-}
-
-// === BOOKMARKS ===
-function tB(id){var i=BK.indexOf(id);if(i!==-1)BK.splice(i,1);else BK.push(id);sD();aF();rB();}
-function tBP(){document.getElementById('bp').classList.toggle('v');}
-function sT(id){
-document.getElementById('bp').classList.remove('v');cAF();
-setTimeout(function(){
-var t=GD.find(function(x){return x.id===id;});
-if(t){fL(t.letter);
-setTimeout(function(){var cd=document.querySelector('[data-id="'+id+'"]');if(cd){cd.scrollIntoView({behavior:'smooth',block:'center'});cd.style.boxShadow='0 0 0 4px var(--acc-d)';setTimeout(function(){cd.style.boxShadow='';},2000);}},100);}
-},50);
-}
-
-// === ROLE ===
-function tR(){
-TM=!TM;
-document.getElementById('sl').className=TM?'':'active';
-document.getElementById('tl').className=TM?'active':'';
-document.getElementById('rTg').className='toggle-sw'+(TM?' on':'');
-document.getElementById('tp').className=TM?'tp v':'tp';
-if(!TM)tLO();
-}
-function tLI(){
-var p=document.getElementById('pwI').value;
-if(p===PW){
-TI=true;document.getElementById('lb').style.display='none';document.getElementById('td').className='td v';document.getElementById('loBt').style.display='block';rP();sTb('pe');shT('Accesso effettuato');aF();
-}else{shT('Password errata');}
-}
-function tLO(){TI=false;document.getElementById('lb').style.display='block';document.getElementById('td').className='td';document.getElementById('loBt').style.display='none';document.getElementById('pwI').value='';}
-window.sTb=function(ti){
-document.querySelectorAll('.tb').forEach(function(b){b.className='tb'+(b.dataset.t===ti?' on':'');});
-document.querySelectorAll('.tc').forEach(function(c){c.className='tc'+(c.id==='tc-'+ti?' on':'');});
-if(ti==='mn')rML();if(ti==='ex')uEA();
-};
-
-// === PENDING ===
-function rP(){
-var c=EL.pl;if(!c)return;
-if(PD.length===0){c.innerHTML='<p style="text-align:center;color:var(--fg-m);padding:30px">Nessun contributo in attesa.</p>';return;}
-c.innerHTML=PD.map(function(i){return'<div class="pc"><div class="pc-h"><span class="cd-l" style="width:32px;height:32px;font-size:0.9rem">'+i.letter+'</span><strong>'+i.term+'</strong></div><p style="color:var(--fg-m);margin-bottom:10px">'+i.definition+'</p><div class="pc-a"><button class="bt bt-p bt-g" onclick="aP(\''+i.id+'\')">Approva</button><button class="bt bt-w bt-g" onclick="rP2(\''+i.id+'\')">Rifiuta</button></div></div>';}).join('');
-}
-window.aP=function(id){var ix=PD.findIndex(function(x){return x.id===id;});if(ix!==-1){var it={letter:PD[ix].letter,term:PD[ix].term,definition:PD[ix].definition,context:PD[ix].context,example:PD[ix].example,legal:PD[ix].legal,history:PD[ix].history,literature:PD[ix].literature,art:PD[ix].art,reflection:PD[ix].reflection,related:PD[ix].related,tags:PD[ix].tags||[],id:Date.now()};GD.push(it);PD.splice(ix,1);sD();uS();rAN();rTC();aF();rP();shT('Approvato');}};
-window.rP2=function(id){if(!confirm('Rifiutare?'))return;PD=PD.filter(function(i){return i.id!==id;});sD();uS();rP();shT('Rifiutato');};
-
-// === MANAGE ===
-function rML(){
-var s=EL.msI?EL.msI.value.toLowerCase():'';var d=GD;
-if(s)d=GD.filter(function(i){return i.term.toLowerCase().indexOf(s)!==-1||i.definition.toLowerCase().indexOf(s)!==-1;});
-d.sort(function(a,b){return a.letter.localeCompare(b.letter)||a.term.localeCompare(b.term);});
-var c=EL.ml;if(!c)return;
-if(d.length===0){c.innerHTML='<p style="text-align:center;color:var(--fg-m);padding:30px">Nessun termine.</p>';return;}
-c.innerHTML=d.map(function(i){return'<div class="pc" style="border-color:var(--bor)"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div style="display:flex;align-items:center;gap:10px"><span class="cd-l" style="width:32px;height:32px;font-size:0.9rem">'+i.letter+'</span><strong>'+i.term+'</strong></div><div style="display:flex;gap:6px"><button class="bt bt-g" onclick="oEM('+i.id+')">Modifica</button><button class="bt bt-d bt-g" onclick="dT('+i.id+')">Elimina</button></div></div></div>';}).join('');
-}
-window.dT=function(id){if(!confirm('Eliminare?'))return;GD=GD.filter(function(i){return i.id!==id;});BK=BK.filter(function(b){return b!==id;});sD();uS();rAN();rTC();aF();rML();rB();shT('Eliminato');};
-
-// === EDIT ===
-window.oEM=function(id){
-var i=GD.find(function(x){return x.id===id;});if(!i)return;
-document.getElementById('eL').value=i.letter;
-document.getElementById('eT').value=i.term;
-document.getElementById('eD').value=i.definition;
-document.getElementById('eCx').value=i.context||'';
-document.getElementById('eEx').value=i.example||'';
-document.getElementById('eRf').value=i.reflection||'';
-document.getElementById('eHs').value=i.history||'';
-document.getElementById('eLt').value=i.literature||'';
-document.getElementById('eAr').value=i.art||'';
-document.getElementById('eLg').value=i.legal||'';
-document.getElementById('eCr').value=i.related||'';
-document.getElementById('eTg').value=(i.tags||[]).join(', ');
-document.getElementById('ef').onsubmit=function(e){e.preventDefault();var i2=GD.findIndex(function(x){return x.id===id;});if(i2!==-1){GD[i2]={letter:document.getElementById('eL').value,term:document.getElementById('eT').value,definition:document.getElementById('eD').value,context:document.getElementById('eCx').value,example:document.getElementById('eEx').value,reflection:document.getElementById('eRf').value,history:document.getElementById('eHs').value,literature:document.getElementById('eLt').value,art:document.getElementById('eAr').value,legal:document.getElementById('eLg').value,related:document.getElementById('eCr').value,tags:document.getElementById('eTg').value.split(',').map(function(t){return t.trim();}).filter(function(t){return t;}),id:id};sD();aF();rAN();rTC();rML();document.getElementById('em').className='mo';shT('Salvato');}};
-document.getElementById('em').className='mo v';
-};
-
-// === IMPORT/EXPORT ===
-function uEA(){if(EL.ea)EL.ea.value=JSON.stringify(GD,null,2);}
-function eG(f){var ts=new Date().toISOString().split('T')[0];if(f==='json'){var d={titolo:'Alfabeto Parita',termini:GD};dF(JSON.stringify(d,null,2),'alfabeto_'+ts+'.json','application/json');}else{var c='Lettera,Termine,Definizione,Tag\n';GD.forEach(function(i){c+='"'+i.letter+'","'+i.term.replace(/"/g,'""')+'","'+i.definition.replace(/"/g,'""')+'","'+(i.tags||[]).join(';')+'"\n';});dF(c,'alfabeto_'+ts+'.csv','text/csv');}shT('Esportato');}
-function dF(ct,fn,tp){var b=new Blob([ct],{type:tp});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=fn;a.click();URL.revokeObjectURL(u);}
-function hFU(f){var r=new FileReader();r.onload=function(e){var ct=e.target.result;var ts=[];if(f.name.endsWith('.json')){try{var d=JSON.parse(ct);ts=Array.isArray(d)?d:(d.termini||[]);}catch(er){shT('Errore JSON');return;}}else if(f.name.endsWith('.csv')){var ls=ct.trim().split('\n');for(var i=1;i<ls.length;i++){var cs=ls[i].split(',').map(function(c){return c.trim().replace(/^"|"$/g,'');});if(cs.length>=3&&cs[0]&&cs[1]&&cs[2]){ts.push({letter:cs[0].toUpperCase(),term:cs[1],definition:cs[2],tags:cs[3]?cs[3].split(';'):[]});}}}if(ts.length===0){shT('Nessun termine');return;}IT=ts;sIP(ts);};r.readAsText(f);}
-function sIP(ts){if(EL.ipL){EL.ipL.innerHTML=ts.slice(0,10).map(function(t){return'<div class="ip-pi"><strong>'+(t.letter||t.l||'')+' - '+(t.term||t.t||'')+'</strong>: '+(t.definition||t.d||'').substring(0,50)+'...</div>';}).join('');if(ts.length>10)EL.ipL.innerHTML+='<div class="ip-pi">...e altri '+(ts.length-10)+'</div>';}if(EL.ipP)EL.ipP.className='ip-p v';}
-function cI(){IT=[];if(EL.ipP)EL.ipP.className='ip-p';document.getElementById('fi').value='';}
-function cfI(){var a=0;IT.forEach(function(t){if((t.letter||t.l)&&(t.term||t.t)&&(t.definition||t.d)){GD.push({id:Date.now()+Math.random(),letter:(t.letter||t.l||'').toUpperCase(),term:t.term||t.t,definition:t.definition||t.d,context:t.context||'',example:t.example||'',legal:t.legal||'',history:t.history||'',tags:t.tags||[]});a++;}});sD();uS();rAN();rTC();aF();cI();shT('Importati '+a+' termini');}
-
-// === QUIZ ===
-function oQM(){document.getElementById('qm').className='mo v';iQ();}
-function iQ(){
-var sh=GD.slice().sort(function(){return Math.random()-0.5;});
-QS={ts:sh.slice(0,10),ci:0,sc:0,rs:[],sa:false,md:'d',ur:''};
-rQO();
-}
-
-function rQO(){
-var c=EL.qc2;if(!c)return;
-c.innerHTML='<p style="margin-bottom:16px;color:var(--fg-m)">Scegli la modalita di gioco:</p>'+
-'<div class="qo">'+
-'<button class="qo2 on" id="mdD"><strong>Termine - Definizione</strong><br><small style="color:var(--fg-m);font-weight:400">Vedi il termine, scrivi la definizione</small></button>'+
-'<button class="qo2" id="mdT"><strong>Definizione - Termine</strong><br><small style="color:var(--fg-m);font-weight:400">Vedi la definizione, indovina il termine</small></button>'+
-'</div>'+
-'<div id="qC" style="margin-top:20px"></div>';
-document.getElementById('mdD').onclick=function(){sQM('d');};
-document.getElementById('mdT').onclick=function(){sQM('t');};
-}
-
-function sQM(m){
-QS.md=m;
-document.querySelectorAll('.qo2').forEach(function(b){b.className='qo2';});
-document.getElementById(m==='d'?'mdD':'mdT').className='qo2 on';
-rQQ();
-}
-
-function rQQ(){
-var c=document.getElementById('qC');
-var t=QS.ts[QS.ci];
-if(!t){rQS();return;}
-var isDefMode=QS.md==='d';
-var displayText=isDefMode?t.term:t.definition;
-var hintText=isDefMode?'Scrivi la definizione corretta':'Scrivi il termine corretto';
-var answerText=isDefMode?t.definition:t.term;
-var progressDots=QS.ts.map(function(_,i){
-var cl='qd';
-if(i<QS.ci)cl+=QS.rs[i]?' co':' wr';
-else if(i===QS.ci)cl+=' cu';
-return'<div class="'+cl+'"></div>';
-}).join('');
-var compareSection='';
-if(QS.sa&&QS.ur){
-compareSection='<div class="q-cmp">'+
-'<div class="q-cmp-i yr"><div class="q-cmp-l">La tua risposta</div><div class="q-cmp-v">'+QS.ur+'</div></div>'+
-'<div class="q-cmp-i"><div class="q-cmp-l">Risposta corretta</div><div class="q-cmp-v">'+answerText+'</div></div>'+
-'</div>';
-}
-c.innerHTML='<div class="qp">'+progressDots+'</div>'+
-'<div class="qk"><div class="ql">'+t.letter+'</div>'+
-'<div class="qm">'+displayText+'</div>'+
-'<div class="qh">'+hintText+'</div></div>'+
-'<div class="qa" style="margin-bottom:16px">'+
-(QS.sa?'':'<textarea class="qta" id="qA" placeholder="Scrivi qui la tua risposta..."></textarea>')+
-'</div>'+
-(QS.sa?'<div class="q-ev"><div class="q-ev-t">Confronta le risposte</div><div class="q-ev-d">Hai scritto la risposta giusta? Valuta te stesso onestamente!</div></div>':'')+
-compareSection+
-'<div class="qa">'+(QS.sa?
-'<button class="q-btn-co" id="crB"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:middle"><path d="M20 6L9 17l-5-5"/></svg>Ho indovinato</button>'+
-'<button class="q-btn-wr" id="wrB"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:middle"><path d="M18 6L6 18M6 6l12 12"/></svg>Ho sbagliato</button>'
-:'<button class="bt bt-p" id="rvB">Verifica risposta</button>')+
-'</div>';
-if(!QS.sa){
-document.getElementById('rvB').onclick=function(){
-var ua=document.getElementById('qA');
-QS.ur=ua?ua.value.trim():'';
-QS.sa=true;
-rQQ();
-};
-}else{
-document.getElementById('crB').onclick=function(){qA(true);};
-document.getElementById('wrB').onclick=function(){qA(false);};
-}
-}
-
-function qA(c){
-QS.rs[QS.ci]=c;
-if(c)QS.sc++;
-var f=document.getElementById('qF');
-if(f){f.className='qf v '+(c?'co':'wr');f.textContent=c?'Risposta corretta!':'Risposta sbagliata';}
-setTimeout(function(){
-QS.ci++;QS.sa=false;QS.ur='';
-if(QS.ci<QS.ts.length)rQQ();else rQS();
-},1200);
-}
-
-function rQS(){
-var c=EL.qc2;if(!c)return;
-var p=Math.round((QS.sc/QS.ts.length)*100);
-var m=p>=80?'Ottimo lavoro!':p>=60?'Buon risultato!':p>=40?'Non male, continua a studiare!':'Ripassa i termini e riprova!';
-c.innerHTML='<div class="qs"><div class="qs-v">'+QS.sc+'/'+QS.ts.length+'</div>'+
-'<div class="qs-l">'+p+'% risposte corrette</div>'+
-'<p style="color:var(--fg-m);margin-bottom:20px">'+m+'</p>'+
-'<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="bt bt-q" id="rtB">Riprova Quiz</button><button class="bt bt-s" id="clB">Chiudi</button></div></div>';
-document.getElementById('rtB').onclick=iQ;
-document.getElementById('clB').onclick=function(){document.getElementById('qm').className='mo';};
-}
-
-// === MODALS ===
-function cCM(){document.getElementById('cm').className='mo';}
-function cEM(){document.getElementById('em').className='mo';}
-window.cCM=cCM;window.cEM=cEM;
-
-// === TOAST ===
-function shT(m){var t=document.getElementById('ts');if(t)t.textContent=m;var to=document.getElementById('to');if(to)to.className='to v';setTimeout(function(){if(to)to.className='to';},2500);}
-
-// === SCROLL ===
-function sST(){var b=document.getElementById('stBt');window.addEventListener('scroll',function(){b.className=window.scrollY>400?'st2 v':'st2';});b.onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};}
-
-// === EVENTS ===
-function sE(){
-document.getElementById('rTg').onclick=tR;
-document.getElementById('rTg').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tR();}};
-var st;document.getElementById('si').oninput=function(e){clearTimeout(st);st=setTimeout(function(){FL.s=e.target.value.toLowerCase().trim();aF();},300);};
-
-// Toggle "Mostra tutti" con cambio colore ON/OFF
-document.getElementById('saBt').onclick=function(){
-if(!saBtOn){
-prevFL={l:FL.l,tg:FL.tg,s:FL.s};
-saBtOn=true;
-this.classList.add('on');
-FL={l:null,tg:null,s:''};
-if(EL.si)EL.si.value='';
-aF();
-}else{
-saBtOn=false;
-this.classList.remove('on');
-FL={l:prevFL.l,tg:prevFL.tg,s:prevFL.s};
-if(EL.si)EL.si.value=prevFL.s;
-aF();
-}
-};
-
-document.getElementById('cfBt2').onclick=cAF;
-document.getElementById('lgBt').onclick=tLI;
-document.getElementById('pwI').onkeydown=function(e){if(e.key==='Enter')tLI();};
-document.getElementById('loBt').onclick=tLO;
-document.querySelectorAll('.tb').forEach(function(b){b.onclick=function(){sTb(b.dataset.t);};});
-document.getElementById('bmBt').onclick=tBP;
-document.getElementById('cbBt').onclick=tBP;
-document.getElementById('qBt').onclick=oQM;
-document.getElementById('cqM').onclick=function(){document.getElementById('qm').className='mo';};
-document.getElementById('cnBt').onclick=function(){document.getElementById('cm').className='mo v';};
-document.getElementById('ccM').onclick=cCM;
-document.getElementById('ceM').onclick=cEM;
-
-document.getElementById('cf').onsubmit=function(e){
-e.preventDefault();
-var i={
-id:'p_'+Date.now(),
-letter:document.getElementById('cL').value,
-term:document.getElementById('cT').value,
-definition:document.getElementById('cD').value,
-context:document.getElementById('cCx').value,
-example:document.getElementById('cEx').value,
-reflection:document.getElementById('cRf').value,
-history:document.getElementById('cHs').value,
-literature:document.getElementById('cLt').value,
-art:document.getElementById('cAr').value,
-legal:document.getElementById('cLg').value,
-related:document.getElementById('cCr').value,
-tags:document.getElementById('cTg').value.split(',').map(function(t){return t.trim();}).filter(function(t){return t;})
-};
-PD.push(i);
-sD();
-uS();
-rP();
-document.getElementById('cm').className='mo';
-shT('Contributo inviato!');
-};
-
-document.getElementById('mf').onsubmit=function(e){
-e.preventDefault();
-var i={
-id:Date.now(),
-letter:document.getElementById('mL').value,
-term:document.getElementById('mT').value,
-definition:document.getElementById('mD').value,
-context:document.getElementById('mCx').value,
-example:document.getElementById('mEx').value,
-reflection:document.getElementById('mRf').value,
-history:document.getElementById('mHs').value,
-literature:document.getElementById('mLt').value,
-art:document.getElementById('mAr').value,
-legal:document.getElementById('mLg').value,
-related:document.getElementById('mCr').value,
-tags:document.getElementById('mTg').value.split(',').map(function(t){return t.trim();}).filter(function(t){return t;})
-};
-GD.push(i);
-sD();
-uS();
-rAN();
-rTC();
-aF();
-e.target.reset();
-shT('Termine aggiunto!');
-};
-
-if(EL.msI){var mst;EL.msI.oninput=function(e){clearTimeout(mst);mst=setTimeout(rML,300);};}
-
-var upA=document.getElementById('upA');
-var fi=document.getElementById('fi');
-upA.onclick=function(){fi.click();};
-upA.ondragover=function(e){e.preventDefault();upA.style.borderColor='var(--acc)';upA.style.background='var(--acc-p)';};
-upA.ondragleave=function(){upA.style.borderColor='';upA.style.background='';};
-upA.ondrop=function(e){e.preventDefault();upA.style.borderColor='';upA.style.background='';if(e.dataTransfer.files[0])hFU(e.dataTransfer.files[0]);};
-fi.onchange=function(e){if(e.target.files[0])hFU(e.target.files[0]);};
-document.getElementById('ciBt').onclick=cI;
-document.getElementById('cfBt').onclick=cfI;
-document.getElementById('ejBt').onclick=function(){eG('json');};
-document.getElementById('ecBt').onclick=function(){eG('csv');};
-document.getElementById('prBt').onclick=function(){window.print();};
-document.querySelectorAll('.mo').forEach(function(o){o.onclick=function(e){if(e.target===o)o.className='mo';};});
-document.onkeydown=function(e){if(e.key==='Escape'){document.querySelectorAll('.mo.v').forEach(function(m){m.className='mo';});document.getElementById('bp').className='bp';}};
-}
-
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();
-</script>
-</body>
-</html>   ---file2--- <!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alfabeto della Parita</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<!-- SCRIPT SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
@@ -1198,8 +115,12 @@ h1,h2,h3{font-weight:700;line-height:1.2}
 .tg-i{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--blu-p);border-radius:50px;font-size:0.85rem;font-weight:600;color:var(--blu);cursor:pointer;transition:0.3s}
 .tg-i:hover{transform:translateY(-2px)}
 .tg-n{padding:2px 8px;background:rgba(255,255,255,0.6);border-radius:50px;font-size:0.7rem;font-weight:700;color:var(--blu)}
+
+/* Tag ON state */
 .tg-i.on{background:linear-gradient(135deg,var(--acc-d),var(--acc))!important;color:#fff!important}
 .tg-i.on .tg-n{background:rgba(255,255,255,0.25)!important;color:#fff!important}
+
+/* Tag specific colors */
 .tg-i.tl{background:var(--emd-p);color:var(--emd)}.tg-i.tl .tg-n{color:var(--emd)}
 .tg-i.ts{background:var(--sky-p);color:var(--sky)}.tg-i.ts .tg-n{color:var(--sky)}
 .tg-i.td{background:var(--ter-p);color:var(--ter)}.tg-i.td .tg-n{color:var(--ter)}
@@ -1275,19 +196,6 @@ h1,h2,h3{font-weight:700;line-height:1.2}
 .pc-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .pc-a{display:flex;gap:8px;margin-top:14px}
 
-/* Import Export */
-.up-a{border:2px dashed var(--bor);border-radius:var(--r);padding:32px;text-align:center;cursor:pointer;transition:0.3s}
-.up-a:hover{border-color:var(--acc);background:var(--acc-p)}
-.up-x{width:40px;height:40px;margin:0 auto 12px;color:var(--fg-m)}
-.up-t{font-size:0.95rem;color:var(--fg-m);margin-bottom:6px}
-.up-h{font-size:0.8rem;color:var(--fg-m);opacity:0.7}
-.up-i{display:none}
-.ip-p{display:none;margin-top:16px;padding:16px;background:var(--bg-s);border-radius:var(--r)}
-.ip-p.v{display:block}
-.ip-pt{font-weight:600;margin-bottom:10px}
-.ip-pl{max-height:180px;overflow-y:auto}
-.ip-pi{padding:8px 12px;background:var(--bg-c);border-radius:6px;margin-bottom:6px;font-size:0.85rem}
-
 /* Modal */
 .mo{display:none;position:fixed;inset:0;background:rgba(45,42,38,0.5);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
 .mo.v{display:flex}
@@ -1312,9 +220,6 @@ h1,h2,h3{font-weight:700;line-height:1.2}
 .qh{font-size:0.85rem;color:var(--fg-m);font-style:italic}
 .qta{width:100%;min-height:100px;padding:14px;background:var(--bg-s);border:2px solid var(--bor);border-radius:var(--r);font-family:inherit;font-size:0.95rem;resize:vertical;transition:0.3s}
 .qta:focus{outline:none;border-color:var(--ter)}
-.qr{display:none;text-align:left;background:var(--bg-s);border-radius:var(--r);padding:16px;margin-bottom:20px}
-.qr.v{display:block}
-.qr-l{font-size:0.8rem;font-weight:600;color:var(--ter);text-transform:uppercase;margin-bottom:8px}
 .qf{display:none;padding:14px;border-radius:var(--r);margin-bottom:20px;font-weight:600}
 .qf.v{display:block}
 .qf.co{background:var(--emd-p);color:var(--emd);border-left:4px solid var(--emd)}
@@ -1608,10 +513,10 @@ Modalita Quiz
 'use strict';
 
 // ==========================================
-// CONFIGURAZIONE SUPABASE - INSERISCI QUI LE CHIAVI
+// CONFIGURAZIONE SUPABASE
 // ==========================================
-const SUPABASE_URL = 'https://ncvqqjprgsuwhybbnudx.supabase.co'; // Esempio: https://xyzzabc.supabase.co
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jdnFxanByZ3N1d2h5YmJudWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMzM0ODIsImV4cCI6MjA4NjkwOTQ4Mn0.dEpHfH39gcwJbRls75ty_Nr7xli33zh0XtMkytne38Q'; // La stringa lunga che inizia con eyJ...
+const SUPABASE_URL = 'https://ncvqqjprgsuwhybbnudx.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jdnFxanByZ3N1d2h5YmJudWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMzM0ODIsImV4cCI6MjA4NjkwOTQ4Mn0.dEpHfH39gcwJbRls75ty_Nr7xli33zh0XtMkytne38Q';
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -1639,11 +544,9 @@ async function init(){
         ea:document.getElementById('ea'),qc2:document.getElementById('qc2'),to:document.getElementById('to'),ts:document.getElementById('ts')
     };
 
-    // Carica dati dal Database
     await loadGD();
     await loadPD();
     
-    // Carica preferiti dal browser
     try{ BK=JSON.parse(localStorage.getItem('bk')||'[]'); } catch(e){ BK=[]; }
 
     rAN(); rTC(); aF(); uS(); rB(); bF(); sE(); sST();
@@ -1653,18 +556,14 @@ async function init(){
 // FUNZIONI DATABASE (SUPABASE)
 // ==========================================
 async function loadGD() {
-    // Prende solo termini APPROVATI (visibili a tutti)
     let { data, error } = await db.from('glossario').select('*').eq('approved', true);
     if (error) { console.error("Errore caricamento:", error); return; }
-    
     GD = data.map(formatRow);
 }
 
 async function loadPD() {
-    // Prende termini NON approvati (pending)
     let { data, error } = await db.from('glossario').select('*').eq('approved', false);
     if (error) { console.error("Errore pending:", error); return; }
-    
     PD = data.map(formatRow);
     rP(); uS();
 }
@@ -1687,9 +586,6 @@ function formatRow(r) {
     };
 }
 
-// ==========================================
-// CONTRIBUZIONI (STUDENTE)
-// ==========================================
 async function submitContribution(formData) {
     const { error } = await db.from('glossario').insert([{
         letter: formData.letter,
@@ -1706,25 +602,18 @@ async function submitContribution(formData) {
         tags: formData.tags,
         approved: false
     }]);
-
-    if (error) {
-        shT("Errore invio: " + error.message);
-    } else {
+    if (error) { shT("Errore invio: " + error.message); } 
+    else {
         shT('Inviato! Sara visibile dopo approvazione.');
         document.getElementById('cm').className='mo';
-        await loadPD(); // Aggiorna lista pending
+        await loadPD();
     }
 }
 
-// ==========================================
-// GESTIONE DOCENTE (APPROVAZIONE)
-// ==========================================
 window.aP = async function(id) {
     const { error } = await db.from('glossario').update({ approved: true }).eq('id', id);
     if (error) { shT("Errore approvazione"); return; }
-    
-    await loadGD();
-    await loadPD();
+    await loadGD(); await loadPD();
     rAN(); rTC(); aF();
     shT('Pubblicato online!');
 };
@@ -1733,7 +622,6 @@ window.rP2 = async function(id) {
     if(!confirm('Rifiutare?')) return;
     const { error } = await db.from('glossario').delete().eq('id', id);
     if (error) { shT("Errore"); return; }
-    
     await loadPD();
     shT('Rifiutato');
 };
@@ -1742,7 +630,6 @@ window.dT = async function(id) {
     if(!confirm('Eliminare definitivamente?')) return;
     const { error } = await db.from('glossario').delete().eq('id', id);
     if (error) { shT("Errore eliminazione"); return; }
-    
     GD = GD.filter(i => i.id !== id);
     BK = BK.filter(b => b !== id);
     localStorage.setItem('bk', JSON.stringify(BK));
@@ -1751,62 +638,404 @@ window.dT = async function(id) {
 };
 
 // ==========================================
-// RENDER E LOGICA UI
+// RENDER
 // ==========================================
-// (Copia qui le funzioni rAN, rTC, rC, aF, uFU, ecc. dal vecchio file, sono identiche)
-// Per brevità ometto le funzioni di render che non cambiano, 
-// ma ASSICURATI DI COPIARLE dal tuo vecchio file per far funzionare il tutto.
+function rAN(){
+    var L=[].concat(GD.map(function(i){return i.letter;}));
+    L=L.filter(function(v,i,a){return a.indexOf(v)===i;}).sort();
+    var N=EL.aN;if(!N)return; N.innerHTML='';
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(l){
+        var b=document.createElement('button');
+        b.className='al-b';
+        b.textContent=l;
+        b.setAttribute('aria-label','Filtra per lettera '+l);
+        if(L.indexOf(l)!==-1){ b.className+=' ht'; b.onclick=function(){fL(l);}; }else{ b.disabled=true; }
+        N.appendChild(b);
+    });
+}
 
-function rAN(){ /* ... uguale a prima ... */ }
-function rTC(){ /* ... uguale a prima ... */ }
-function aF(){ /* ... uguale a prima ... */ }
-function uFU(){ /* ... uguale a prima ... */ }
-function rC(d){ /* ... uguale a prima ... */ }
+function rTC(){
+    var C={};
+    GD.forEach(function(i){if(i.tags)i.tags.forEach(function(t){C[t]=(C[t]||0)+1;});});
+    var S=Object.entries(C).sort(function(a,b){return b[1]-a[1];});
+    var T=EL.tgC;if(!T)return; T.innerHTML='';
+    S.forEach(function(c){
+        var b=document.createElement('button');
+        b.className='tg-i';
+        if(FL.tg===c[0])b.className+=' on';
+        var tc=c[0];
+        if(tc==='legal')b.className+=' tl';
+        else if(tc==='scientifico')b.className+=' ts';
+        else if(tc==='diritti')b.className+=' td';
+        else if(tc==='social')b.className+=' tso';
+        else if(tc==='lavoro')b.className+=' tla';
+        b.innerHTML='#'+c[0]+' <span class="tg-n">'+c[1]+'</span>';
+        b.onclick=function(){fT(c[0]);};
+        T.appendChild(b);
+    });
+    if(EL.tgCt)EL.tgCt.textContent=' ('+S.length+' argomenti)';
+}
+
+function aF(){
+    var d=GD.slice();
+    if(FL.l)d=d.filter(function(i){return i.letter===FL.l;});
+    if(FL.tg)d=d.filter(function(i){return i.tags&&i.tags.indexOf(FL.tg)!==-1;});
+    if(FL.s){ var s=FL.s.toLowerCase(); d=d.filter(function(i){return i.term.toLowerCase().indexOf(s)!==-1||i.definition.toLowerCase().indexOf(s)!==-1;}); }
+    rC(d);uFU();
+}
+
+function uFU(){
+    var bs=document.querySelectorAll('.al-b');
+    bs.forEach(function(b){ var iso=b.textContent===FL.l; b.className='al-b'+(b.disabled?'':' ht')+(iso?' on':''); });
+    var ts=document.querySelectorAll('.tg-i');
+    ts.forEach(function(t){ var tn=t.textContent.split(' ')[0].replace('#',''); if(tn===FL.tg)t.className=t.className+' on'; else t.className=t.className.replace(' on',''); });
+    var fs=EL.fsW,af=EL.af; if(!fs||!af)return;
+    var hf=FL.l||FL.tg||FL.s;
+    fs.className=hf?'fs2 v':'fs2';
+    var h='';
+    if(FL.l)h+='<span class="fc lt">Lettera '+FL.l+'</span>';
+    if(FL.tg)h+='<span class="fc">Tag: #'+FL.tg+'</span>';
+    if(FL.s)h+='<span class="fc">Ricerca: "'+FL.s+'"</span>';
+    af.innerHTML=h;
+}
+
+function rC(d){
+    var c=EL.gc;if(!c)return;
+    if(d.length===0){c.innerHTML='<p style="text-align:center;color:var(--fg-m);padding:40px">Nessun termine trovato.</p>';return;}
+    c.innerHTML=d.map(function(i){
+        var bk=BK.indexOf(i.id)!==-1;
+        var tgH='';
+        if(i.tags&&i.tags.length)tgH=i.tags.map(function(t){return'<span class="cd-t2" onclick="fT(\''+t+'\')">#'+t+'</span>';}).join('');
+        return'<article class="cd'+(bk?' bk':'')+'" data-id="'+i.id+'"><div class="cd-h"><div class="cd-l">'+i.letter+'</div><div class="cd-tg"><h3 class="cd-tt">'+i.term+'</h3></div><div class="cd-a"><button class="cd-b'+(bk?' on':'')+'" onclick="tB('+i.id+')" aria-label="Preferiti"><svg width="16" height="16" viewBox="0 0 24 24" fill="'+(bk?'currentColor':'none')+'" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>'+(TI?'<button class="cd-b" onclick="oEM('+i.id+')" aria-label="Modifica"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="cd-b" onclick="dT('+i.id+')" aria-label="Elimina" style="color:var(--dan)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>':'')+'</div></div><div class="cd-bd"><p class="cd-d">'+i.definition+'</p><div class="cd-sc">'+(i.context?'<div class="ib cx"><div class="ib-l">Contesto scientifico</div><p>'+i.context+'</p></div>':'')+(i.example?'<div class="ib ex"><div class="ib-l">Esempio pratico</div><p>'+i.example+'</p></div>':'')+(i.legal?'<div class="ib lg"><div class="ib-l">Riferimenti normativi</div><p>'+i.legal+'</p></div>':'')+(i.history?'<div class="ib hs"><div class="ib-l">Cenni storici</div><p>'+i.history+'</p></div>':'')+'</div>'+(tgH?'<div class="cd-tx">'+tgH+'</div>':'')+'</div></article>';
+    }).join('');
+}
+
 function uS(){
     document.getElementById('ttV').textContent=GD.length;
-    document.getElementById('tlV').textContent=[].concat(GD.map(i=>i.letter)).filter((v,i,a)=>a.indexOf(v)===i).length;
+    document.getElementById('tlV').textContent=[].concat(GD.map(function(i){return i.letter;})).filter(function(v,i,a){return a.indexOf(v)===i;}).length;
     document.getElementById('tpV').textContent=PD.length;
     document.getElementById('pc').textContent=PD.length;
 }
-function rB(){ /* ... uguale a prima ... */ }
-function bF(){ /* ... uguale a prima, ma cambia l'onclick della submit */ }
-function rP(){ /* ... uguale a prima ... */ }
-function rML(){ /* ... uguale a prima ... */ }
 
-// ... COPIA TUTTE LE ALTRE FUNZIONI (fL, fT, tB, sT, tR, tLI, tLO, sTb, rQQ, ecc.) ....
+function rB(){
+    var l=EL.bl;if(!l)return;
+    var is=GD.filter(function(i){return BK.indexOf(i.id)!==-1;});
+    if(is.length===0){l.innerHTML='<div class="eb">Nessun preferito.</div>';return;}
+    l.innerHTML=is.map(function(i){
+        return'<div class="bi" onclick="sT('+i.id+')"><div class="bi-tt">'+i.term+'</div><div class="bi-p">'+i.definition.substring(0,60)+'...</div></div>';
+    }).join('');
+}
 
-// Modifica onsubmit del form contributo per chiamare submitContribution
-function sE(){
-    // ... (copia tutto l'evento sE dal vecchio file) ...
-    // Modifica solo questa parte:
-    document.getElementById('cf').onsubmit = function(e){
+function bF(){
+    var sections=[
+        {title:'Informazioni di Base',cls:'f1',fields:[
+            {i:'L',l:'Lettera*',y:'sl',r:true},
+            {i:'T',l:'Termine*',y:'tx',r:true},
+            {i:'D',l:'Definizione*',y:'ta',r:true}
+        ]},
+        {title:'Contesto scientifico e Applicativo',cls:'f2',fields:[
+            {i:'Cx',l:'Contesto scientifico',y:'ta',ph:'Inserisci il contesto scientifico...'},
+            {i:'Ex',l:'Esempio pratico',y:'ta',ph:'Fornisci un esempio concreto...'}
+        ]},
+        {title:'Riferimenti Culturali e Storici',cls:'f3',fields:[
+            {i:'Hs',l:'Cenni storici',y:'ta',ph:'Riferimenti storici...'},
+            {i:'Lg',l:'Riferimenti normativi',y:'tx',ph:'Leggi, convenzioni...'}
+        ]},
+        {title:'Aspetti Normativi e Collegamenti',cls:'f4',fields:[
+            {i:'Tg',l:'Tag (separati da virgola)',y:'tx',ph:'es: diritti, lavoro, scientifico'}
+        ]}
+    ];
+    
+    ['cf','mf','ef'].forEach(function(fi){
+        var f=document.getElementById(fi);if(!f)return;
+        var ic=fi==='cf'?'c':fi==='ef'?'e':'m';
+        f.innerHTML=sections.map(function(s){
+            return'<div class="fs '+s.cls+'"><div class="fs-tt">'+s.title+'</div>'+s.fields.map(function(fd){
+                var ph=fd.ph?' placeholder="'+fd.ph+'"':'';
+                return'<div class="fg"><label class="fl" for="'+ic+fd.i+'">'+fd.l+'</label>'+(fd.y==='sl'?'<select class="fsl" id="'+ic+fd.i+'"'+(fd.r?' required':'')+'><option value="">Seleziona</option>'+'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(function(l){return'<option value="'+l+'">'+l+'</option>';}).join('')+'</select>':fd.y==='ta'?'<textarea class="ft" id="'+ic+fd.i+'"'+(fd.r?' required':'')+ph+'></textarea>':'<input class="fi" type="text" id="'+ic+fd.i+'"'+(fd.r?' required':'')+ph+'>')+'</div>';
+            }).join('')+'</div>';
+        }).join('')+'<div class="fa"><button type="button" class="bt bt-s" onclick="'+(fi==='cf'?'cCM()':fi==='ef'?'cEM()':'sTb(\'pe\')')+'">Annulla</button><button type="submit" class="bt bt-p">'+(fi==='ef'?'Salva modifiche':'Invia contributo')+'</button></div>';
+    });
+}
+
+function rP(){
+    var c=EL.pl;if(!c)return;
+    if(PD.length===0){c.innerHTML='<p style="text-align:center;color:var(--fg-m);padding:30px">Nessun contributo in attesa.</p>';return;}
+    c.innerHTML=PD.map(function(i){return'<div class="pc"><div class="pc-h"><span class="cd-l" style="width:32px;height:32px;font-size:0.9rem">'+i.letter+'</span><strong>'+i.term+'</strong></div><p style="color:var(--fg-m);margin-bottom:10px">'+i.definition+'</p><div class="pc-a"><button class="bt bt-p bt-g" onclick="aP('+i.id+')">Approva</button><button class="bt bt-w bt-g" onclick="rP2('+i.id+')">Rifiuta</button></div></div>';}).join('');
+}
+
+function rML(){
+    var s=EL.msI?EL.msI.value.toLowerCase():'';var d=GD;
+    if(s)d=GD.filter(function(i){return i.term.toLowerCase().indexOf(s)!==-1||i.definition.toLowerCase().indexOf(s)!==-1;});
+    d.sort(function(a,b){return a.letter.localeCompare(b.letter)||a.term.localeCompare(b.term);});
+    var c=EL.ml;if(!c)return;
+    if(d.length===0){c.innerHTML='<p style="text-align:center;color:var(--fg-m);padding:30px">Nessun termine.</p>';return;}
+    c.innerHTML=d.map(function(i){return'<div class="pc" style="border-color:var(--bor)"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div style="display:flex;align-items:center;gap:10px"><span class="cd-l" style="width:32px;height:32px;font-size:0.9rem">'+i.letter+'</span><strong>'+i.term+'</strong></div><div style="display:flex;gap:6px"><button class="bt bt-g" onclick="oEM('+i.id+')">Modifica</button><button class="bt bt-d bt-g" onclick="dT('+i.id+')">Elimina</button></div></div></div>';}).join('');
+}
+
+// ==========================================
+// FILTRI
+// ==========================================
+function fL(l){FL.l=FL.l===l?null:l;aF();}
+function fT(t){FL.tg=FL.tg===t?null:t;aF();}
+window.rF=function(k){if(k==='s'){FL.s='';if(EL.si)EL.si.value='';}else{FL[k]=null;}aF();};
+function cAF(){ FL={l:null,tg:null,s:''}; if(EL.si)EL.si.value=''; aF(); saBtOn=false; document.getElementById('saBt').classList.remove('on'); }
+
+// ==========================================
+// PREFERITI
+// ==========================================
+function tB(id){var i=BK.indexOf(id);if(i!==-1)BK.splice(i,1);else BK.push(id);localStorage.setItem('bk', JSON.stringify(BK));aF();rB();}
+function tBP(){document.getElementById('bp').classList.toggle('v');}
+function sT(id){
+    document.getElementById('bp').classList.remove('v');cAF();
+    setTimeout(function(){
+        var t=GD.find(function(x){return x.id===id;});
+        if(t){fL(t.letter);
+        setTimeout(function(){var cd=document.querySelector('[data-id="'+id+'"]');if(cd){cd.scrollIntoView({behavior:'smooth',block:'center'});cd.style.boxShadow='0 0 0 4px var(--acc-d)';setTimeout(function(){cd.style.boxShadow='';},2000);}},100);}
+    },50);
+}
+
+// ==========================================
+// RUOLO
+// ==========================================
+function tR(){
+    TM=!TM;
+    document.getElementById('sl').className=TM?'':'active';
+    document.getElementById('tl').className=TM?'active':'';
+    document.getElementById('rTg').className='toggle-sw'+(TM?' on':'');
+    document.getElementById('tp').className=TM?'tp v':'tp';
+    if(!TM)tLO();
+}
+function tLI(){
+    var p=document.getElementById('pwI').value;
+    if(p===PW){ TI=true;document.getElementById('lb').style.display='none';document.getElementById('td').className='td v';document.getElementById('loBt').style.display='block';rP();sTb('pe');shT('Accesso effettuato');aF(); }else{shT('Password errata');}
+}
+function tLO(){TI=false;document.getElementById('lb').style.display='block';document.getElementById('td').className='td';document.getElementById('loBt').style.display='none';document.getElementById('pwI').value='';}
+window.sTb=function(ti){
+    document.querySelectorAll('.tb').forEach(function(b){b.className='tb'+(b.dataset.t===ti?' on':'');});
+    document.querySelectorAll('.tc').forEach(function(c){c.className='tc'+(c.id==='tc-'+ti?' on':'');});
+    if(ti==='mn')rML();if(ti==='ex')uEA();
+};
+
+// ==========================================
+// EDIT
+// ==========================================
+window.oEM=function(id){
+    var i=GD.find(function(x){return x.id===id;});if(!i)return;
+    document.getElementById('eL').value=i.letter;
+    document.getElementById('eT').value=i.term;
+    document.getElementById('eD').value=i.definition;
+    document.getElementById('eCx').value=i.context||'';
+    document.getElementById('eEx').value=i.example||'';
+    document.getElementById('eHs').value=i.history||'';
+    document.getElementById('eLg').value=i.legal||'';
+    document.getElementById('eTg').value=(i.tags||[]).join(', ');
+    document.getElementById('ef').onsubmit=function(e){
         e.preventDefault();
-        var formData = {
-            letter: document.getElementById('cL').value,
-            term: document.getElementById('cT').value,
-            definition: document.getElementById('cD').value,
-            context: document.getElementById('cCx').value,
-            example: document.getElementById('cEx').value,
-            reflection: document.getElementById('cRf').value,
-            history: document.getElementById('cHs').value,
-            literature: document.getElementById('cLt').value,
-            art: document.getElementById('cAr').value,
-            legal: document.getElementById('cLg').value,
-            related: document.getElementById('cCr').value,
-            tags: document.getElementById('cTg').value.split(',').map(t=>t.trim()).filter(t=>t)
+        var i2=GD.findIndex(function(x){return x.id===id;});
+        if(i2!==-1){
+            GD[i2]={
+                letter:document.getElementById('eL').value,
+                term:document.getElementById('eT').value,
+                definition:document.getElementById('eD').value,
+                context:document.getElementById('eCx').value,
+                example:document.getElementById('eEx').value,
+                history:document.getElementById('eHs').value,
+                legal:document.getElementById('eLg').value,
+                tags:document.getElementById('eTg').value.split(',').map(function(t){return t.trim();}).filter(function(t){return t;}),
+                id:id
+            };
+            // Aggiornamento Supabase
+            db.from('glossario').update(GD[i2]).eq('id', id).then(function(res){ 
+                if(res.error) shT("Errore salvataggio");
+                else { aF(); rAN(); rTC(); rML(); document.getElementById('em').className='mo'; shT('Salvato'); }
+            });
+        }
+    };
+    document.getElementById('em').className='mo v';
+};
+
+// ==========================================
+// EXPORT
+// ==========================================
+function uEA(){if(EL.ea)EL.ea.value=JSON.stringify(GD,null,2);}
+function eG(f){var ts=new Date().toISOString().split('T')[0];var d={titolo:'Alfabeto Parita',termini:GD};var b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download='alfabeto_'+ts+'.json';a.click();URL.revokeObjectURL(u);shT('Esportato');}
+
+// ==========================================
+// QUIZ
+// ==========================================
+function oQM(){document.getElementById('qm').className='mo v';iQ();}
+function iQ(){
+    var sh=GD.slice().sort(function(){return Math.random()-0.5;});
+    QS={ts:sh.slice(0,10),ci:0,sc:0,rs:[],sa:false,md:'d',ur:''};
+    rQO();
+}
+
+function rQO(){
+    var c=EL.qc2;if(!c)return;
+    c.innerHTML='<p style="margin-bottom:16px;color:var(--fg-m)">Scegli la modalita:</p>'+
+    '<div class="qo"><button class="qo2 on" id="mdD">Termine - Definizione</button><button class="qo2" id="mdT">Definizione - Termine</button></div><div id="qC" style="margin-top:20px"></div>';
+    document.getElementById('mdD').onclick=function(){sQM('d');};
+    document.getElementById('mdT').onclick=function(){sQM('t');};
+}
+
+function sQM(m){
+    QS.md=m;
+    document.querySelectorAll('.qo2').forEach(function(b){b.className='qo2';});
+    document.getElementById(m==='d'?'mdD':'mdT').className='qo2 on';
+    rQQ();
+}
+
+function rQQ(){
+    var c=document.getElementById('qC');
+    var t=QS.ts[QS.ci];
+    if(!t){rQS();return;}
+    var isDefMode=QS.md==='d';
+    var displayText=isDefMode?t.term:t.definition;
+    var hintText=isDefMode?'Scrivi la definizione corretta':'Scrivi il termine corretto';
+    var answerText=isDefMode?t.definition:t.term;
+    c.innerHTML='<div class="qp">'+QS.ts.map(function(_,i){
+        var cl='qd';
+        if(i<QS.ci)cl+=QS.rs[i]?' co':' wr';
+        else if(i===QS.ci)cl+=' cu';
+        return'<div class="'+cl+'"></div>';
+    }).join('')+'</div>'+
+    '<div class="qk"><div class="ql">'+t.letter+'</div><div class="qm">'+displayText+'</div><div class="qh">'+hintText+'</div></div>'+
+    '<div class="qa" style="margin-bottom:16px">'+
+    (QS.sa?'':'<textarea class="qta" id="qA" placeholder="Scrivi qui la tua risposta..."></textarea>')+
+    '</div>'+(QS.sa?'<div class="q-ev"><div class="q-ev-t">Confronta le risposte</div><div class="q-ev-d">Hai scritto la risposta giusta?</div></div>':'')+
+    (QS.sa?'<div class="q-cmp"><div class="q-cmp-i yr"><div class="q-cmp-l">La tua risposta</div><div class="q-cmp-v">'+QS.ur+'</div></div><div class="q-cmp-i"><div class="q-cmp-l">Risposta corretta</div><div class="q-cmp-v">'+answerText+'</div></div></div>':'')+
+    '<div class="qa">'+(QS.sa?
+    '<button class="q-btn-co" id="crB">Ho indovinato</button><button class="q-btn-wr" id="wrB">Ho sbagliato</button>'
+    :'<button class="bt bt-p" id="rvB">Verifica risposta</button>')+'</div>';
+    if(!QS.sa){
+        document.getElementById('rvB').onclick=function(){
+            var ua=document.getElementById('qA');
+            QS.ur=ua?ua.value.trim():'';
+            QS.sa=true;
+            rQQ();
+        };
+    }else{
+        document.getElementById('crB').onclick=function(){qA(true);};
+        document.getElementById('wrB').onclick=function(){qA(false);};
+    }
+}
+
+function qA(c){
+    QS.rs[QS.ci]=c;
+    if(c)QS.sc++;
+    setTimeout(function(){
+        QS.ci++;QS.sa=false;QS.ur='';
+        if(QS.ci<QS.ts.length)rQQ();else rQS();
+    },1200);
+}
+
+function rQS(){
+    var c=EL.qc2;if(!c)return;
+    var p=Math.round((QS.sc/QS.ts.length)*100);
+    var m=p>=80?'Ottimo!':p>=60?'Buon lavoro!':p>=40?'Non male!':'Ripassa!';
+    c.innerHTML='<div class="qs"><div class="qs-v">'+QS.sc+'/'+QS.ts.length+'</div>'+
+    '<div class="qs-l">'+p+'% corretto</div><p style="color:var(--fg-m);margin-bottom:20px">'+m+'</p>'+
+    '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="bt bt-q" id="rtB">Riprova</button><button class="bt bt-s" id="clB">Chiudi</button></div></div>';
+    document.getElementById('rtB').onclick=iQ;
+    document.getElementById('clB').onclick=function(){document.getElementById('qm').className='mo';};
+}
+
+// ==========================================
+// MODALS
+// ==========================================
+function cCM(){document.getElementById('cm').className='mo';}
+function cEM(){document.getElementById('em').className='mo';}
+window.cCM=cCM;window.cEM=cEM;
+
+// ==========================================
+// TOAST
+// ==========================================
+function shT(m){var t=document.getElementById('ts');if(t)t.textContent=m;var to=document.getElementById('to');if(to)to.className='to v';setTimeout(function(){if(to)to.className='to';},2500);}
+
+// ==========================================
+// SCROLL
+// ==========================================
+function sST(){var b=document.getElementById('stBt');window.addEventListener('scroll',function(){b.className=window.scrollY>400?'st2 v':'st2';});b.onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};}
+
+// ==========================================
+// EVENTI
+// ==========================================
+function sE(){
+    document.getElementById('rTg').onclick=tR;
+    document.getElementById('rTg').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tR();}};
+    var st;document.getElementById('si').oninput=function(e){clearTimeout(st);st=setTimeout(function(){FL.s=e.target.value.toLowerCase().trim();aF();},300);};
+    
+    document.getElementById('saBt').onclick=function(){
+        if(!saBtOn){
+            prevFL={l:FL.l,tg:FL.tg,s:FL.s};
+            saBtOn=true; this.classList.add('on');
+            FL={l:null,tg:null,s:''};
+            if(EL.si)EL.si.value=''; aF();
+        }else{
+            saBtOn=false; this.classList.remove('on');
+            FL={l:prevFL.l,tg:prevFL.tg,s:prevFL.s};
+            if(EL.si)EL.si.value=prevFL.s; aF();
+        }
+    };
+    
+    document.getElementById('cfBt2').onclick=cAF;
+    document.getElementById('lgBt').onclick=tLI;
+    document.getElementById('pwI').onkeydown=function(e){if(e.key==='Enter')tLI();};
+    document.getElementById('loBt').onclick=tLO;
+    document.querySelectorAll('.tb').forEach(function(b){b.onclick=function(){sTb(b.dataset.t);};});
+    document.getElementById('bmBt').onclick=tBP;
+    document.getElementById('cbBt').onclick=tBP;
+    document.getElementById('qBt').onclick=oQM;
+    document.getElementById('cqM').onclick=function(){document.getElementById('qm').className='mo';};
+    document.getElementById('cnBt').onclick=function(){document.getElementById('cm').className='mo v';};
+    document.getElementById('ccM').onclick=cCM;
+    document.getElementById('ceM').onclick=cEM;
+    
+    document.getElementById('cf').onsubmit=function(e){
+        e.preventDefault();
+        var formData={
+            letter:document.getElementById('cL').value,
+            term:document.getElementById('cT').value,
+            definition:document.getElementById('cD').value,
+            context:document.getElementById('cCx').value,
+            example:document.getElementById('cEx').value,
+            history:document.getElementById('cHs').value,
+            legal:document.getElementById('cLg').value,
+            tags:document.getElementById('cTg').value.split(',').map(function(t){return t.trim();}).filter(function(t){return t;})
         };
         submitContribution(formData);
     };
     
-    // ... (il resto è uguale, ricorda di copiare gli eventi per bookmarks, quiz, ecc.)
+    document.getElementById('mf').onsubmit=function(e){
+        e.preventDefault();
+        // Inserimento diretto come APPROVATO (Docente)
+        var i={
+            letter:document.getElementById('mL').value,
+            term:document.getElementById('mT').value,
+            definition:document.getElementById('mD').value,
+            context:document.getElementById('mCx').value,
+            example:document.getElementById('mEx').value,
+            history:document.getElementById('mHs').value,
+            legal:document.getElementById('mLg').value,
+            tags:document.getElementById('mTg').value.split(',').map(function(t){return t.trim();}).filter(function(t){return t;}),
+            approved:true
+        };
+        db.from('glossario').insert([i]).then(function(res){
+            if(res.error) shT("Errore inserimento");
+            else { loadGD(); shT('Aggiunto!'); e.target.reset(); }
+        });
+    };
+    
+    if(EL.msI){var mst;EL.msI.oninput=function(e){clearTimeout(mst);mst=setTimeout(rML,300);};}
+    
+    document.getElementById('ejBt').onclick=function(){eG('json');};
+    document.getElementById('prBt').onclick=function(){window.print();};
+    document.querySelectorAll('.mo').forEach(function(o){o.onclick=function(e){if(e.target===o)o.className='mo';};});
+    document.onkeydown=function(e){if(e.key==='Escape'){document.querySelectorAll('.mo.v').forEach(function(m){m.className='mo';});document.getElementById('bp').className='bp';}};
 }
 
-// Helper che mancava
-function sD(){ localStorage.setItem('bk', JSON.stringify(BK)); }
-
-// Avvio
-if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
-
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
 </body>
