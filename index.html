@@ -27,7 +27,8 @@ h1,h2,h3{font-weight:700;line-height:1.2}
 /* Header */
 .hd{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bor);padding:16px 0}
 .hd-c{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.lg{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg)}
+/* Logo: rimosso 'pointer' (dito), cursore di default */
+.lg{display:flex;align-items:center;gap:14px;color:var(--fg);cursor:default}
 .lg-i{width:50px;height:50px;background:linear-gradient(135deg,var(--acc-d),var(--acc));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:800;color:#fff;box-shadow:0 8px 24px rgba(200,80,122,0.35)}
 .lg-t{font-size:1.35rem;font-weight:700}
 .lg-t span{color:var(--acc-d)}
@@ -64,7 +65,8 @@ h1,h2,h3{font-weight:700;line-height:1.2}
 .hr-b{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--lav-p);color:var(--ter);border-radius:50px;font-size:0.9rem;font-weight:600;margin-bottom:20px}
 .hr h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;margin-bottom:20px}
 .hr h1 .hl{background:linear-gradient(135deg,var(--acc-d),var(--acc),var(--ter));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hr-s{font-size:1.1rem;color:var(--fg-m);max-width:700px;margin:0 auto 30px;text-align:left;background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(248,244,248,0.9));padding:24px;border-radius:var(--r);border:1px solid var(--bor);box-shadow:var(--sh);backdrop-filter:blur(4px)}
+/* Descrizione con gradiente radiante armonioso */
+.hr-s{font-size:1.1rem;color:var(--fg);max-width:700px;margin:0 auto 30px;text-align:left;background:linear-gradient(135deg, #ffffff 0%, #fdf6f8 40%, #f4f0f4 100%);padding:24px;border-radius:var(--r);border:1px solid var(--bor);box-shadow:var(--sh);backdrop-filter:blur(4px)}
 .hr-s ul{list-style:none}
 .hr-s li{position:relative;padding-left:28px;margin-bottom:12px}
 .hr-s li:last-child{margin-bottom:0}
@@ -322,7 +324,7 @@ h1,h2,h3{font-weight:700;line-height:1.2}
 <header class="hd">
 <div class="ct">
 <div class="hd-c">
-<a href="#" class="lg"><div class="lg-i">AP</div><div class="lg-t">Alfabeto della <span>Parita</span></div></a>
+<div class="lg"><div class="lg-i">AP</div><div class="lg-t">Alfabeto della <span>Parita</span></div></div>
 <div class="hd-a">
 <button class="bt bt-c" id="prBt">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -558,12 +560,14 @@ async function init(){
 async function loadGD() {
     let { data, error } = await db.from('glossario').select('*').eq('approved', true);
     if (error) { console.error("Errore caricamento:", error); return; }
+    data = data || []; // Safety check
     GD = data.map(formatRow);
 }
 
 async function loadPD() {
     let { data, error } = await db.from('glossario').select('*').eq('approved', false);
     if (error) { console.error("Errore pending:", error); return; }
+    data = data || []; // Safety check
     PD = data.map(formatRow);
     rP(); uS();
 }
@@ -845,7 +849,6 @@ window.oEM=function(id){
                 tags:document.getElementById('eTg').value.split(',').map(function(t){return t.trim();}).filter(function(t){return t;}),
                 id:id
             };
-            // Aggiornamento Supabase
             db.from('glossario').update(GD[i2]).eq('id', id).then(function(res){ 
                 if(res.error) shT("Errore salvataggio");
                 else { aF(); rAN(); rTC(); rML(); document.getElementById('em').className='mo'; shT('Salvato'); }
@@ -1009,7 +1012,6 @@ function sE(){
     
     document.getElementById('mf').onsubmit=function(e){
         e.preventDefault();
-        // Inserimento diretto come APPROVATO (Docente)
         var i={
             letter:document.getElementById('mL').value,
             term:document.getElementById('mT').value,
